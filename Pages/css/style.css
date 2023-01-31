@@ -1,0 +1,131 @@
+html,
+body {
+    height: 100%;
+    background-color: #F2F2F2;
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    height: 100%;
+    width: 100%;
+    display: table;
+    overflow: hidden;
+}
+
+#contenedor {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#contenido {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.contenedor-login {
+    background-color: #fff;
+    height: auto;
+    width: auto;
+    padding: 20px;
+    border-radius:6px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+}
+
+.contenedor-registro {
+    background-color: #fff;
+    height: auto;
+    width: auto;
+    padding: 20px;
+    border-radius:6px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+    text-align: left;
+}
+
+.form-input {
+    --width-of-input: 100%;
+    --border-height: 1px;
+    --border-before-color: #A8D95F;
+    --border-after-color: #82BF26;
+    position: relative;
+    width: var(--width-of-input);
+    margin-bottom: 7px;
+}
+
+/* styling of Input */
+.input {
+    color: #000;
+    font-size: 0.9rem;
+    background-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+    border-bottom: var(--border-height) solid var(--border-before-color);
+}
+
+/* styling of animated border */
+.input-border {
+    position: absolute;
+    background: var(--border-after-color);
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+}
+
+input:focus {
+    outline: none;
+}
+
+/* here is code of animated border */
+input:focus~.input-border {
+    width: 100%;
+}
+
+/* boton login */
+.btn-login {
+    border: none;
+    background-color: #82BF26;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transform: translate(1) translate(0, 0);
+    transition: transform 225ms, box-shadow 225ms;
+}
+
+.btn-login:hover {
+    transform: scale(1.05) translate(0, -0.15rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+}
+
+.btn-login:active {
+    transform: scale(1) translate(0, 0.15rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.span-msg{
+    color:#5C6673;
+    font-size:14px;
+}
+
+.a-register{
+    text-decoration:none;
+    color:#0C87F2;
+}
+.a-register:hover{
+    text-decoration:none;
+    color:#82BF26;
+}
