@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 date_default_timezone_set('America/Guayaquil');
-require_once './class/public.class.php';
+require_once '../class/public.class.php';
 $init = new InitTicket;
 $title=$init->title;
 ?>
@@ -15,77 +15,13 @@ $title=$init->title;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="./plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="./plugins/fontawesome-free-6.2.1-web/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free-6.2.1-web/css/all.min.css">
+    <link rel="shortcut icon" href="../assets/img/ailee-green-bg-dark-t-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/app.css">
     <title><?php echo $title; ?></title>
-    <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-    }
-
-    /* .subpages {
-        margin-top: 40px;
-    } */
-
-    /* Dropdown Button */
-    .dropbtn {
-        background-color: transparent;
-        color: white;
-        padding: 4px;
-        font-size: 16px;
-        border: none;
-    }
-
-    /* The container <div> - needed to position the dropdown content */
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    /* Dropdown Content (Hidden by Default) */
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        right: 0;
-        background-color: #f1f1f1;
-        min-width: 200px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    /* Links inside the dropdown */
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-    /* Change color of dropdown links on hover */
-    .dropdown-content a:hover {
-        background-color: #ddd;
-    }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    /* Change the background color of the dropdown button when the dropdown content is shown */
-    .dropdown:hover .dropbtn {
-        background-color: transparent;
-    }
-
-    .nav-link-down {
-        padding: 11px;
-        font-size: 18px;
-    }
-
-    .text-content {
-        font-size: 15px;
-    }
-    </style>
 </head>
 
 <body>
@@ -105,7 +41,28 @@ $title=$init->title;
 
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- crear alerta -->
+    <script>
+    function showAlert(type, message, duration) {
+        if (!message) return false;
+        if (!type) type = 'info';
+        $("<div class='alert alert-message alert-" +
+            type +
+            " data-alert alert-dismissible'>" +
+            "<button class='close alert-link' data-dismiss='alert'>&times;</button>" +
+            message + " </div>").hide().appendTo('body').fadeIn(300);
+        if (duration === undefined) {
+            duration = 5000;
+        }
+        if (duration !== false) {
+            $(".alert-message").delay(duration).fadeOut(500, function() {
+                $(this).remove();
+            });
+        }
+    }
+    </script>
 </body>
 
 </html>

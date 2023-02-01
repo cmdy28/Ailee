@@ -1,12 +1,16 @@
 <style>
+    .bg-nav-bottom {
+        background-color: #F2F2F2;
+        box-shadow: 0px 15px 10px -20px #111;
+    }
     .nav-item {
-        background-color: #82BF26;
         height: auto;
         font-size: 20px;
     }
 
     .nav-item:hover {
-        background-color: #A8D95F;
+        background-color: #82BF26;
+        color:#fff;
     }
 
     .active {
@@ -15,6 +19,9 @@
 
     .navbar-toggler {
         border: none;
+    }
+    .dropbtn:hover{
+        color:#fff;
     }
 </style>
 <nav class="navbar navbar-expand-lg bg-nav-bottom">
@@ -25,7 +32,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a type="button" href="?modulo=start" class="dropbtn nav-link-down" style="text-decoration:none;" >Home</a>
                 </li>
                 <li class="nav-item">
@@ -89,3 +96,14 @@
         </div>
     </div>
 </nav>
+
+<script>
+      $(function() {
+       $('.nav li ').click(function(e) {
+           e.preventDefault();
+           var $this = $(this);
+           $this.closest('ul').children('li').removeClass('active');
+           $this.parent().addClass('active');
+       });
+      });
+   </script>

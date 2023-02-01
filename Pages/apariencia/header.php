@@ -1,10 +1,7 @@
 <style>
      .bg-nav-top {
         background-color: #121B26;
-    }
-
-    .bg-nav-bottom {
-        background-color: #F2F2F2;
+        padding: 0px;
     }
 
     .text-ailee {
@@ -44,11 +41,48 @@
         font-size:11px;
         color:#82BF26;
     }
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown-u {
+        position: relative;
+        display: inline-block;
+    }
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content-u {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f1f1f1;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    /* Links inside the dropdown */
+    .dropdown-content-u a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content-u a:hover {
+        background-color: #ddd;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown-u:hover .dropdown-content-u {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown-u:hover .dropbtn {
+        background-color: transparent;
+    }
 </style>
 <nav class="navbar bg-nav-top">
     <div class="container-fluid">
         <a class="nav-link text-light" href="#">
-            <img src="./assets/img/ailee-green-bg-dark-t-logo.png" alt="Logo" height="30" class="">
+            <img src="../assets/img/ailee-green-bg-dark-t-logo.png" alt="Logo" height="30" class="">
             <span class="text-ailee">AILEE <sup class="sup">00000</sup></span>
         </a>
         <div>
@@ -58,9 +92,9 @@
             <a class="nav-link text-light info" href="#">
                 <i class="fas fa-question-circle"></i>
             </a>
-            <div class="dropdown">
-                <button class="dropbtn">User <i class="fas fa-user-circle"></i></button>
-                <div class="dropdown-content">
+            <div class="dropdown-u">
+                <button class="dropbtn" style="color:#fff">User <i class="fas fa-user-circle"></i></button>
+                <div class="dropdown-content-u" >
                     <a href="?modulo=perfil_usuario">Perfil</a>
                     <a href="?modulo=general">Configuración</a>
                     <a href="#">Cerrar Sesión</a>
