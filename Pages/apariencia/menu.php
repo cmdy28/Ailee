@@ -97,13 +97,3 @@
     </div>
 </nav>
 
-<script>
-      $(function() {
-       $('.nav li ').click(function(e) {
-           e.preventDefault();
-           var $this = $(this);
-           $this.closest('ul').children('li').removeClass('active');
-           $this.parent().addClass('active');
-       });
-      });
-   </script>

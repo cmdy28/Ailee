@@ -21,6 +21,9 @@ $title=$init->title;
     <link rel="shortcut icon" href="../assets/img/ailee-green-bg-dark-t-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/app.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
     <title><?php echo $title; ?></title>
 </head>
 
@@ -37,11 +40,6 @@ $title=$init->title;
 		    include $init->subpagePath;
 		?>
     </div>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- crear alerta -->
     <script>

@@ -1,125 +1,105 @@
 <?php
 include '../class/conexion.php';
 // Definir variables
-$nombre_Err = $emailErr = $apellidoErr = $telErr = $websiteErr = $passErr = "";
-$nombre = $email = $apellido = $tel = $website = $pass = "";
-$valida_nombre = $valida_apellido = $valida_email = $valida_pass = $valida_tel = $valida_website = false;
+$empresa_Err = $email_Err = $direccion_Err = $telefono_Err = $nombre_contacto_Err = $pass_Err = "";
+$empresa = $email = $direccion = $telefono_contacto = $nombre_contacto = $pass = "";
+$valida_empresa = $valida_direccion = $valida_email = $valida_pass = $valida_telefono = $valida_nombre_contacto = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["nombre"])) {
-        $nombre_Err = "Nombre es requerido!";
+    if (empty($_POST["empresa"])) {
+        $empresa_Err = "Ingresa el nombre de tu empresa.";
     } else {
-        $nombre = validar_input($_POST["nombre"]);
-        if (!ctype_alpha($nombre)) {
-            $nombre_Err = "Ingresa solo letras!";
+        $empresa = validar_input($_POST["empresa"]);
+        if (!ctype_alpha($empresa)) {
+            $empresa_Err = "Ingresa solo letras.";
         } else {
-            $valida_nombre = true;
+            $valida_empresa = true;
         }
     }
 
-    if (empty($_POST["apellido"])) {
-        $apellidoErr = "Apellido es requerido!";
+    if (empty($_POST["direccion"])) {
+        $direccion_Err = "Ingresa una dirección.";
     } else {
-        $apellido = validar_input($_POST["apellido"]);
-        if (!ctype_alpha($apellido)) {
-            $apellidoErr = "Ingresa solo letras!";
-        } else {
-            $valida_apellido = true;
-        }
+        $direccion = validar_input($_POST["direccion"]);
+        $valida_direccion = true;
     }
 
     if (empty($_POST["email"])) {
-        $emailErr = "Email es requerido";
+        $email_Err = "Ingresa un correo electrónico.";
     } else {
         $email = validar_input($_POST["email"]);
         // Verifica el correcto formato de email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Formato de email invalido";
+            $email_Err = "Formato de email invalido.";
         } else {
             $valida_email = true;
         }
     }
 
-    if (empty($_POST["tel"])) {
-        $telErr = "Teléfono es requerido!";
+    if (empty($_POST["telefono_contacto"])) {
+        $telefono_Err = "Ingresa un teléfono de contacto.";
     } else {
-        $tel = validar_input($_POST["tel"]);
-        if (!is_numeric($_POST["tel"])) {
-            $telErr = "Numbers only !";
-        } else if (strlen($_POST["tel"]) != 10) {
-            $telErr = "10 characters only !";
+        $telefono_contacto = validar_input($_POST["telefono_contacto"]);
+        if (!is_numeric($_POST["telefono_contacto"])) {
+            $telefono_Err = "Solo se permiten números.";
+        } else if (strlen($_POST["telefono_contacto"]) != 10) {
+            $telefono_Err = "Ingresa un teléfono válido";
         } else {
-            $valida_tel = true;
+            $valida_telefono = true;
         }
     }
 
-    if (empty($_POST["website"])) {
-        $websiteErr = "Website es requerido";
+    if (empty($_POST["nombre_contacto"])) {
+        $nombre_contacto_Err = "Ingresa un nombre de contacto.";
     } else {
-        $website = validar_input($_POST["website"]);
-        // Verifica el correcto formato de email
-        if (!filter_var($website, FILTER_VALIDATE_URL)) {
-            $websiteErr = "Formato de url invalido";
-        } else {
-            $valida_website = true;
-        }
+        $nombre_contacto = validar_input($_POST["nombre_contacto"]);
+        $valida_nombre_contacto = true;
     }
 
     if (empty($_POST["pass"])) {
-        $passErr = "Contraseña es requerido";
+        $pass_Err = "Ingresa una contraseña.";
     } else {
         $pass = validar_input($_POST["pass"]);
         if (strlen($pass) < 6) {
-            $passErr = "La clave debe tener al menos 6 caracteres";
+            $pass_Err = "La clave debe tener al menos 8 caracteres";
         } else if (strlen($pass) > 16) {
-            $passErr = "La clave no puede tener más de 16 caracteres";
-        } /*else if (!preg_match('`[a-z]`', $pass)) {
-            $passErr = "La clave debe tener al menos una letra minúscula";
+            $pass_Err = "La clave no puede tener más de 16 caracteres";
+        } else if (!preg_match('`[a-z]`', $pass)) {
+            $pass_Err = "La clave debe tener al menos una letra minúscula";
         } else if (!preg_match('`[A-Z]`', $pass)) {
-            $passErr = "La clave debe tener al menos una letra mayúscula";
+            $pass_Err = "La clave debe tener al menos una letra mayúscula";
         } else if (!preg_match('`[0-9]`', $pass)) {
-            $passErr = "La clave debe tener al menos un caracter numérico";
-        }*/ else {
+            $pass_Err = "La clave debe tener al menos un caracter numérico";
+        } else {
             $valida_pass = true;
             $pass = md5($pass);
         }
     }
 }
 
-if ($valida_nombre == true && $valida_apellido == true && $valida_email == true && $valida_pass == true && $valida_tel == true && $valida_website == true) {
+if ($valida_empresa == true && $valida_direccion == true && $valida_email == true && $valida_pass == true && $valida_telefono == true && $valida_nombre_contacto == true) {
     //Hacer query para la base de datos.
-    $query = "select nombre, apellido, email, pass, telefono, website from usuario where email=? ";
+    $query = "select empresa, direccion, email, pass, telefono_contacto, nombre_contacto from empresas where email=? and empresa=? ";
     $select = $gbd->prepare($query);
-    $select->execute(array($email));
-
-
+    $select->execute(array($email, $empresa));
+    //verificamos que no exista la empresa.
     if ($select->rowCount() > 0) {
-
         echo '
                 <script>
-                    alert("Ya se encuentra un usuario registrado con ese correo");
-                    window.location="registro.php";
+                    alert("La empresa ya se encuentra registrada.");
+                    window.location="register.php";
                 </script>
              ';
     } else {
-
-
-        $query = "insert into usuario (nombre, apellido, email, pass, telefono, website, fecha_ingreso) 
+        $query = "insert into usuario (empresa, direccion, email, pass, telefono_contacto, nombre_contacto) 
         values(?,?,?,?,?,?,?) RETURNING id";
         $insert = $gbd->prepare($query);
-        $insert->execute(array($nombre, $apellido, $email, $pass, $tel, $website, 'now()'));
+        $insert->execute(array($empresa, $direccion, $email, $pass, $telefono_contacto, $nombre_contacto));
 
         if ($insert->rowCount() > 0) {
             $rowin = $insert->fetch(PDO::FETCH_ASSOC);
             $idregistro = $rowin['id'];
         }
-
-        $clave = $email . "moitoru2021" . "_" . $idregistro;
-        $mipass = password_hash($clave, PASSWORD_BCRYPT);
-
-        $query1 = "update usuario set apikey=? where id=?";
-        $update = $gbd->prepare($query1);
-        $update->execute(array($mipass, $idregistro));
-
+        
         $querytabladata = 'CREATE TABLE public.data' . $idregistro . ' (
             id bigserial NOT NULL,
             fecha timestamptz NULL,
@@ -180,7 +160,8 @@ if ($valida_nombre == true && $valida_apellido == true && $valida_email == true 
     }
 }
 
-function validar_input($data){
+function validar_input($data)
+{
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -200,7 +181,7 @@ function validar_input($data){
     <link rel="shortcut icon" href="../assets/img/ailee-green-bg-dark-t-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <title>Ailee - Registro</title>
-    <style>
+<style>
     .span-order {
         font-size: 16px;
         font-weight: bold;
@@ -213,7 +194,7 @@ function validar_input($data){
     select#tipo_negocio.input:focus {
         outline: none;
     }
-    </style>
+</style>
 </head>
 
 <body>
@@ -222,7 +203,7 @@ function validar_input($data){
             <div id="contenido">
                 <img src="../assets/img/aile-logo-green-t.png" width=100px alt="">
                 <br>
-                <h4>Crea tu cuenta gratis!</h4>
+                <h4>Crea tu cuenta</h4>
                 <br>
                 <div class="contenedor-registro">
                     <form action="" method="post">
@@ -235,8 +216,8 @@ function validar_input($data){
                                     <span class="input-border"></span>
                                 </div>
                                 <div class="form-input">
-                                    <input class="input" placeholder="Teléfono de contacto" name="telefono"
-                                        id="telefono" type="text">
+                                    <input class="input" placeholder="Teléfono de contacto" name="telefono_contacto"
+                                        id="telefono_contacto" type="text">
                                     <span class="input-border"></span>
                                 </div>
                             </div>
@@ -257,8 +238,8 @@ function validar_input($data){
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-input">
-                                    <input class="input" placeholder="Nombre del Negocio" name="nombre_negocio"
-                                        id="nombre_negocio" type="text">
+                                    <input class="input" placeholder="Nombre del Negocio" name="empresa"
+                                        id="empresa" type="text">
                                     <span class="input-border"></span>
                                 </div>
                             </div>
@@ -296,9 +277,7 @@ function validar_input($data){
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

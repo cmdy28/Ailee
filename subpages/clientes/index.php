@@ -1,3 +1,15 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include '../class/conexion.php';
+//Obtenemos los datos del cliente
+$sql2 = " select * from clientes";
+$stmtex = $gbd->query($sql2);
+$stmtex->execute();
+$datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+//var_dump($datos);
+?>
 <div class="container-fluid">
     <div class="div-new">
         <div>
@@ -24,7 +36,7 @@
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-icon"><i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i></button>
+                    <button class="btn btn-icon" ><i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i></button>
                     <button class="btn btn-icon"><i class="fa-solid fa-file-pdf" style="font-size:27px; color:#000"></i></button>
                 </div>
             </div>
@@ -37,26 +49,34 @@
                         <th scope="col" width=15%># Documento</th>
                         <th scope="col" width=30%>Cliente</th>
                         <th scope="col" width=30%>Email</th>
-                        <th scope="col" width=15%>Teléfono</th>
+                        <th scope="col" width=15%>Teléfono(s)</th>
                         <th scope="col" width=10% style="text-align:center">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                    <?php
+                    foreach($datos as $data){
+                        echo '<tr>
+                        <th scope="row">'.$data['cedula'].'</th>
+                        <td>'.$data['nombre'].'</td>
+                        <td>'.$data['email'].'</td>
+                        <td>
+                            <li>'.$data['telefono'].'</li>
+                            <li>'.$data['celular'].'</li>
+                        </td>
                         <td style="text-align:center">
-                            <a href="?modulo=nuevocliente?id=0">
+                            <a href="?modulo=nuevocliente&id='.$data['id'].'">
                                 <button class="btn btn-edit">
                                     <i class="fa-solid fa-pen" style="font-size:18px; color:#000"></i>
                                 </button>
                             </a>
                         </td>
-                    </tr>
+                    </tr>';
+                    }
+                    ?>
                 </tbody>
             </table>
+            
         </div>
     </div>
 </div>

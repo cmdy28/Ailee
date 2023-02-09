@@ -11,7 +11,7 @@
 		//Lista las subpaginas
 		public $pages = array(
 			'start' => array('path' => '../subpages/resultados/index.php','title' => 'Ailee - Gestiona tu Restaurante !'),
-            'clientes' => array('path' => '../subpages/clientes/index.php','title' => 'Home'),
+            'clientes' => array('path' => '../subpages/clientes/index.php','title' => 'Clientes'),
 			'nuevocliente' => array('path' => '../subpages/clientes/new.php','title' => 'Agregar Cliente'),
 			'menu' => array('path' => '../subpages/pedidos/index.php','title' => 'Menú POS'),
 			'mesas' => array('path' => '../subpages/pedidos/mesas.php','title' => 'Mesas'),
@@ -20,6 +20,7 @@
 			'productos' => array('path' => '../subpages/productos/index.php','title' => 'Productos'),
 			'compras' => array('path' => '../subpages/provision/compras.php','title' => 'Compras'),
 			'proveedores' => array('path' => '../subpages/proveedores/index.php','title' => 'Proveedores'),
+			'nuevoproveedor' => array('path' => '../subpages/proveedores/new.php','title' => 'Nuevo Proveedor'),
 			'procesamiento' => array('path' => '../subpages/provision/procesamiento.php','title' => 'Procesamiento'),
 			'fisico' => array('path' => '../subpages/provision/fisico.php','title' => 'Físico'),
 			'cardex' => array('path' => '../subpages/provision/cardex.php','title' => 'Cardex'),
