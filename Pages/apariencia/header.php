@@ -1,5 +1,11 @@
+<?php 
+$id = $_SESSION['id'];
+if(strlen($id) <= 3){
+    $id="00".$id;
+}
+?>
 <style>
-     .bg-nav-top {
+    .bg-nav-top {
         background-color: #121B26;
         padding: 0px;
     }
@@ -24,6 +30,7 @@
     /*ICONS*/
     .fa-user-circle {
         font-size: 25px;
+        margin-left: 10px;
     }
 
     .fa-question-circle {
@@ -83,7 +90,7 @@
     <div class="container-fluid">
         <a class="nav-link text-light" href="#">
             <img src="../assets/img/ailee-green-bg-dark-t-logo.png" alt="Logo" height="30" class="">
-            <span class="text-ailee">AILEE <sup class="sup">00000</sup></span>
+            <span class="text-ailee">AILEE <sup class="sup"><?php echo $id ?></sup></span>
         </a>
         <div>
             <a class="hora">00:00:00</a>
@@ -93,11 +100,15 @@
                 <i class="fas fa-question-circle"></i>
             </a>
             <div class="dropdown-u">
-                <button class="dropbtn" style="color:#fff">User <i class="fas fa-user-circle"></i></button>
+                <button class="dropbtn" style="color:#fff"><?php echo $_SESSION['empresa'] ?><i class="fas fa-user-circle"></i></button>
                 <div class="dropdown-content-u" >
                     <a href="?modulo=perfil_usuario">Perfil</a>
                     <a href="?modulo=general">Configuración</a>
-                    <a href="#">Cerrar Sesión</a>
+                    <a href="login.php">Cerrar Sesión 
+                    <?php
+					session_abort();
+					?>
+                    </a>
                 </div>
             </div>
         </div>

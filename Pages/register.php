@@ -1,5 +1,5 @@
 <?php
-include '../class/conexion.php';
+include '../class/conexion_admin.php';
 // Definir variables
 $empresa_Err = $email_Err = $direccion_Err = $telefono_Err = $nombre_contacto_Err = $pass_Err = "";
 $empresa = $email = $direccion = $telefono_contacto = $nombre_contacto = $pass = "";
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $telefono_contacto = validar_input($_POST["telefono_contacto"]);
         if (!is_numeric($_POST["telefono_contacto"])) {
             $telefono_Err = "Solo se permiten números.";
-        } else if (strlen($_POST["telefono_contacto"]) != 10) {
+        } elseif (strlen($_POST["telefono_contacto"]) != 10) {
             $telefono_Err = "Ingresa un teléfono válido";
         } else {
             $valida_telefono = true;
@@ -59,17 +59,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pass_Err = "Ingresa una contraseña.";
     } else {
         $pass = validar_input($_POST["pass"]);
-        if (strlen($pass) < 6) {
+        if (strlen($pass) < 8) {
             $pass_Err = "La clave debe tener al menos 8 caracteres";
-        } else if (strlen($pass) > 16) {
+        } elseif (strlen($pass) > 16) {
             $pass_Err = "La clave no puede tener más de 16 caracteres";
-        } else if (!preg_match('`[a-z]`', $pass)) {
+        } /*elseif (!preg_match('`[a-z]`', $pass)) {
             $pass_Err = "La clave debe tener al menos una letra minúscula";
-        } else if (!preg_match('`[A-Z]`', $pass)) {
+        } elseif (!preg_match('`[A-Z]`', $pass)) {
             $pass_Err = "La clave debe tener al menos una letra mayúscula";
-        } else if (!preg_match('`[0-9]`', $pass)) {
+        } elseif (!preg_match('`[0-9]`', $pass)) {
             $pass_Err = "La clave debe tener al menos un caracter numérico";
-        } else {
+        }*/ else {
             $valida_pass = true;
             $pass = md5($pass);
         }
@@ -88,75 +88,87 @@ if ($valida_empresa == true && $valida_direccion == true && $valida_email == tru
                     alert("La empresa ya se encuentra registrada.");
                     window.location="register.php";
                 </script>
-             ';
+            ';
     } else {
-        $query = "insert into usuario (empresa, direccion, email, pass, telefono_contacto, nombre_contacto) 
-        values(?,?,?,?,?,?,?) RETURNING id";
+        $query = "insert into empresas (empresa, direccion, email, pass, telefono_contacto, nombre_contacto) 
+        values(:empresa, :direccion, :email, :pass, :telefono_contacto, :nombre_contacto) RETURNING id";
         $insert = $gbd->prepare($query);
-        $insert->execute(array($empresa, $direccion, $email, $pass, $telefono_contacto, $nombre_contacto));
+        $insert->bindValue(':nombre_contacto', $nombre_contacto);
+        $insert->bindValue(':empresa', $empresa);
+        $insert->bindValue(':direccion', $direccion);
+        $insert->bindValue(':telefono_contacto', $telefono_contacto);
+        $insert->bindValue(':email', $email);
+        $insert->bindValue(':pass', $pass);
+        $insert->execute();
 
         if ($insert->rowCount() > 0) {
             $rowin = $insert->fetch(PDO::FETCH_ASSOC);
             $idregistro = $rowin['id'];
         }
         
-        $querytabladata = 'CREATE TABLE public.data' . $idregistro . ' (
-            id bigserial NOT NULL,
-            fecha timestamptz NULL,
-            ip varchar(120) NULL,
-            agent text NULL,
-            referer text NULL,
-            lat text NULL,
-            lng text NULL, 
-            navigator text NULL,
-            platform text NULL,
-            cookie text NULL,
-            footprint text NULL,
-            eljson text NULL,
-            "first" bool NULL DEFAULT false,
-            loadtime text NULL,
-            id_user int8 NULL,
-            "location" text NULL,
-            "name" varchar(250) NULL,
-	        "unique_id" text NULL,
-            "country_code" text NULL,
-            "country_name" text NULL,
-            CONSTRAINT data_pkey' . $idregistro . ' PRIMARY KEY (id)
-        )';
-        $createtable = $gbd->prepare($querytabladata);
-        $createtable->execute();
+        // $base = 'base_'.$idregistro;
+        // $query = "update empresas set base=:base where id=:id";
+        // $insert = $gbd->prepare($query);
+        // $insert->bindValue(':base', $base);
+        // $insert->bindValue(':id', $id);
+        // $insert->execute();
 
-
-        $querytabladata2 = "CREATE TABLE public.tiempos" . $idregistro . " (
-            id bigserial NOT NULL,
-            fecha timestamp NULL,
-            users int8 NULL,
-            tiempo float8 NULL,
-            jsonpaginas text NOT NULL DEFAULT ''::text,
-            CONSTRAINT tiempos_pkey" . $idregistro . " PRIMARY KEY (id))";
-        $createtable2 = $gbd->prepare($querytabladata2);
-        $createtable2->execute();
-    }
-
-
-
-
-    //$ejecutar = pg_query($conexion,$query);
-
-    if ($insert) {
-        echo '
-                   <script>
-                       alert("Registro exitoso, por favor inicia sesión.");
-                       window.location="login.php";
-                   </script>
+        if ($insert) {
+            echo '
+                    <script>
+                        alert("Tu cuenta se creo con éxito, por favor inicia sesión.");
+                        window.location="login.php";
+                    </script>
                 ';
-    } else {
-        echo '
-                <script>
-                    alert("Fallo al ingresar al usuario a la base de datos.");
-                    window.location="registro.php";
-                </script>
-             ';
+        } else {
+            echo '
+                    <script>
+                        alert("Fallo al crear tu cuenta.");
+                        window.location="registro.php";
+                    </script>
+                ';
+        }
+        // if ($insert->rowCount() > 0) {
+        //     $rowin = $insert->fetch(PDO::FETCH_ASSOC);
+        //     $idregistro = $rowin['id'];
+        // }
+
+        // $querytabladata = 'CREATE TABLE public.data' . $idregistro . ' (
+        //     id bigserial NOT NULL,
+        //     fecha timestamptz NULL,
+        //     ip varchar(120) NULL,
+        //     agent text NULL,
+        //     referer text NULL,
+        //     lat text NULL,
+        //     lng text NULL,
+        //     navigator text NULL,
+        //     platform text NULL,
+        //     cookie text NULL,
+        //     footprint text NULL,
+        //     eljson text NULL,
+        //     "first" bool NULL DEFAULT false,
+        //     loadtime text NULL,
+        //     id_user int8 NULL,
+        //     "location" text NULL,
+        //     "name" varchar(250) NULL,
+        //     "unique_id" text NULL,
+        //     "country_code" text NULL,
+        //     "country_name" text NULL,
+        //     CONSTRAINT data_pkey' . $idregistro . ' PRIMARY KEY (id)
+        // )';
+        // $createtable = $gbd->prepare($querytabladata);
+        // $createtable->execute();
+
+
+        // $querytabladata2 = "CREATE TABLE public.tiempos" . $idregistro . " (
+        //     id bigserial NOT NULL,
+        //     fecha timestamp NULL,
+        //     users int8 NULL,
+        //     tiempo float8 NULL,
+        //     jsonpaginas text NOT NULL DEFAULT ''::text,
+        //     CONSTRAINT tiempos_pkey" . $idregistro . " PRIMARY KEY (id))";
+        // $createtable2 = $gbd->prepare($querytabladata2);
+        // $createtable2->execute();
     }
 }
 
@@ -206,7 +218,7 @@ function validar_input($data)
                 <h4>Crea tu cuenta</h4>
                 <br>
                 <div class="contenedor-registro">
-                    <form action="" method="post">
+                    <form action="register.php" method="post">
                         <span class="span-order">Datos Básicos</span>
                         <div class="row">
                             <div class="col-md-6">
@@ -215,22 +227,26 @@ function validar_input($data)
                                         id="nombre_contacto" type="text">
                                     <span class="input-border"></span>
                                 </div>
+                                <span class="error"><?php echo $nombre_contacto_Err ?></span>
                                 <div class="form-input">
                                     <input class="input" placeholder="Teléfono de contacto" name="telefono_contacto"
                                         id="telefono_contacto" type="text">
                                     <span class="input-border"></span>
                                 </div>
+                                <span class="error"><?php echo $telefono_Err?></span>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-input">
                                     <input class="input" placeholder="Correo Electrónico" name="email" id="email"
                                         type="text">
-                                    <span class="input-border"></span>
+                                    <span class="input-border"></span>                                   
                                 </div>
+                                <span class="error"><?php echo $email_Err ?></span>
                                 <div class="form-input">
-                                    <input class="input" placeholder="Contraseña" name="pass" id="pass" type="text">
+                                    <input class="input" placeholder="Contraseña" name="pass" id="pass" type="password">
                                     <span class="input-border"></span>
                                 </div>
+                                <span class="error"><?php echo $pass_Err?></span>
                             </div>
                         </div>
                         <br>
@@ -242,6 +258,7 @@ function validar_input($data)
                                         id="empresa" type="text">
                                     <span class="input-border"></span>
                                 </div>
+                                <span class="error"><?php echo $empresa_Err ?></span>
                             </div>
                             <div class="col-md-6">
                                 <!-- <div class="form-input">
@@ -257,6 +274,7 @@ function validar_input($data)
                                         type="text">
                                     <span class="input-border"></span>
                                 </div>
+                                <span class="error"><?php echo $direccion_Err?></span>
                             </div>
                         </div>
                         <!-- <div class="form-input">

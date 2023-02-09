@@ -4,8 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 date_default_timezone_set('America/Guayaquil');
 require_once '../class/public.class.php';
+session_start();
 $init = new InitTicket;
 $title=$init->title;
+$empresa=$_SESSION['empresa'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +42,7 @@ $title=$init->title;
 		    include $init->subpagePath;
 		?>
     </div>
+
 
     <!-- crear alerta -->
     <script>

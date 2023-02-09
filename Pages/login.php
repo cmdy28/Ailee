@@ -1,3 +1,51 @@
+<?php
+include '../class/conexion_admin.php';
+session_start();
+$email_Err = $pass_Err = "";
+$email = $pass = "";
+$valida_email = $valida_pass = false;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["email"])) {
+        $email_Err = "Ingresa tu correo electrónico.";
+    } else {
+        $email = $_POST["email"];
+        $valida_email = true;
+    }
+
+    if (empty($_POST["pass"])) {
+        $pass_Err = "Ingresa una contraseña.";
+    } else {
+        $pass = md5($_POST['pass']);
+        $valida_pass = true;
+    }
+}
+
+if ($valida_email == true && $valida_pass == true) {
+    //Hacer query para la base de datos.
+    $query = "select * from empresas where email=:email and pass=:pass ";
+    $consulta = $gbd->prepare($query);
+    $consulta->bindValue(':email', $email);
+    $consulta->bindValue(':pass', $pass);
+    $consulta->execute();
+    if ($consulta -> rowCount()>0) {
+        $rowconsulta=$consulta->fetch(PDO::FETCH_ASSOC);
+        var_dump($rowconsulta);
+        $_SESSION['email']=$email;
+        $_SESSION['inicia']=1;
+        $_SESSION['id']=$rowconsulta['id'];
+        $_SESSION['empresa']=$rowconsulta['empresa'];
+        $_SESSION['nombre_contacto']=$rowconsulta['nombre_contacto'];
+        $_SESSION['telefono_contacto']=$rowconsulta['telefono_contacto'];
+        $_SESSION['direccion']=$rowconsulta['direccion'];
+        header("location:inicio.php");
+    } else {
+        echo 'se cerro la conexion';
+        session_destroy();
+        header("location:login.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,18 +70,22 @@
                 <h4>BIENVENIDO</h4>
                 <br>
                 <div class="contenedor-login">
-                    <form action="" method="post">
+                    <form action="login.php" method="post">
                         <div class="form-input">
-                            <input class="input" placeholder="Usuario" required="" type="text">
+                            <input class="input" placeholder="Usuario" type="text" name="email" id="email">
                             <span class="input-border"></span>
                         </div>
+                        <span class="error"><?php echo $email_Err ?></span>
                         <br>
                         <div class="form-input">
-                            <input class="input" placeholder="Contraseña" required="" type="text">
+                            <input class="input" placeholder="Contraseña" type="password" name="pass" id="pass">
                             <span class="input-border"></span>
                         </div>
+                        <span class="error"><?php echo $pass_Err ?></span>
                         <br>
-                        <button type="submit" class="btn-login">Ingresar</button>
+                        <center>
+                            <button type="submit" class="btn-login">Ingresar</button>
+                        </center>
                     </form>
                 </div>
                 <br>
