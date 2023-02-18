@@ -36,66 +36,66 @@ if (isset($_REQUEST['id'])) {
             <a href="?modulo=clientes"><Button class="btn btn-regresar">Regresar</Button></a>
             <h5>Agregar / Editar Cliente</h5>
         </div>
-        <br>
         <hr>
-        <br>
-        <form id="formCliente" name="formCliente" method="post">
+        <form id="formCliente" action='../subpages/clientes/insert.php' name="formCliente" method="post">
             <?php echo $input_id; ?>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-input">
-                        <input class="input" placeholder="#Documento" name="cedula" id="cedula" type="text"
+                    <label for="cedula">#Documento</label>
+                    <div class="input-group flex-nowrap ">
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-id-card"></i></span>
+                        <input class="form-control" placeholder="#Documento" name="cedula" id="cedula" type="text"
                             value="<?php echo $cedula ?>">
-                        <span class="input-border"></span>
-                        <span class="error" id="cedula_e"></span>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-input">
-                        <input class="input" placeholder="Nombre" name="nombre" id="nombre" type="text"
+                    <label for="nombre">Nombre</label>
+                    <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-user"></i></span>
+                        <input class="form-control" placeholder="Nombre" name="nombre" id="nombre" type="text"
                             value="<?php echo $nombre ?>">
-                        <span class="input-border"></span>
-                        <span class="error" id="nombre_e"></span>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-input">
-                        <input class="input" placeholder="Correo Electrónico" name="email" id="email" type="email"
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-envelope"></i></span>
+                        <input class="form-control" placeholder="Correo Electrónico" name="email" id="email" type="text"
                             value="<?php echo $email ?>">
-                        <span class="input-border"></span>
-                        <span class="error" id="email_e"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-input">
-                        <input class="input" placeholder="Dirección" name="direccion" id="direccion" type="text"
-                            value="<?php echo $direccion ?>">
-                        <span class="input-border"></span>
-                        <span class="error" id="direccion_e"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-input">
-                        <input class="input" placeholder="Teléfono" name="telefono" id="telefono" type="text"
-                            value="<?php echo $telefono ?>">
-                        <span class="input-border"></span>
-                        <span class="error" id="telefono_e"></span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-input">
-                        <input class="input" placeholder="Teléfono Secundario (Opcional)" name="celular" id="celular" type="text"
-                            value="<?php echo $celular?>">
-                        <span class="input-border"></span>
                     </div>
                 </div>
             </div>
             <br>
-            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="direccion">Dirección</label>
+                    <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-location-dot"></i></span>
+                        <input class="form-control" placeholder="Dirección" name="direccion" id="direccion" type="text"
+                            value="<?php echo $direccion ?>">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="telefono">Teléfono</label>
+                    <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-phone"></i></span>
+                        <input class="form-control" placeholder="Teléfono" name="telefono" id="telefono" type="text"
+                            value="<?php echo $telefono ?>">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="celular">Celular</label>
+                    <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-phone"></i></span>
+                        <input class="form-control" placeholder="Teléfono Secundario (Opcional)" name="celular" id="celular" type="text"
+                            value="<?php echo $celular?>">
+                    </div>
+                </div>
+            </div>
+            <br>
             <br>
             <div>
                 <button type="submit" class="btn btn-guardar">Guardar</button>
@@ -112,7 +112,7 @@ $('#formCliente').submit(function() { // catch the form's submit event
     $.ajax({ // create an AJAX call...
         data: $(this).serialize(), // get the form data
         type: $(this).attr('method'), // GET or POST
-        url: '../subpages/clientes/insert.php', // the file to call
+        url: $(this).attr('action'), // the file to call
         success: function(response) { // on success..
             console.log(response);
             $('#respuesta').html(response);

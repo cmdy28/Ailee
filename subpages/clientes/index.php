@@ -4,11 +4,19 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
 //Obtenemos los datos del cliente
-$sql2 = " select * from clientes";
-$stmtex = $gbd->query($sql2);
-$stmtex->execute();
-$datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
-//var_dump($datos);
+if (isset($_REQUEST['search'])) {
+    $search = $_REQUEST['search'];
+    $sql2 = " select * from clientes where UPPER(nombre) like UPPER('%$search%') or cedula like '%$search%' or UPPER(email) like UPPER('%$search%')  order by nombre";
+    $stmtex = $gbd->query($sql2);
+    $stmtex->execute();
+    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $sql2 = " select * from clientes order by nombre";
+    $stmtex = $gbd->query($sql2);
+    $stmtex->execute();
+    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+}
+
 ?>
 <div class="container-fluid">
     <div class="div-new">
@@ -21,7 +29,7 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
         <div>
             <div class="row">
                 <div class="col-md-5">
-                    <form action="" class="form">
+                    <form action="?modulo=clientes" method="post" class="form">
                         <button>
                             <svg height="20" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
                                 aria-labelledby="search">
@@ -32,7 +40,7 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
                                 </path>
                             </svg>
                         </button>
-                        <input class="input" placeholder="Buscar" required="" type="text">
+                        <input class="input" placeholder="Buscar Cliente / Cédula / Email" name="search" id="search" type="text">
                     </form>
                 </div>
                 <div class="col-md-6">

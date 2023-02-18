@@ -1,56 +1,80 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../../class/conexion.php';
 include '../../subpages/functions.php';
-
-$nombre = $cedula = $direccion = $email = $telefono = $celular = '';
-$nombre_valida = $cedula_valida = $direccion_valida = $email_valida = $telefono_valida = $celular_valida = false;
-if (isset($_REQUEST['cedula'])) {
-    if (empty($_POST["cedula"])) {
+//echo 'LLEGA';
+$nombre_comercial = $nombre_contacto = $ruc = $direccion = $email = $telefono = $celular = $observacion = '';
+$nombre_comercial_valida = $nombre_contacto_valida = $ruc_valida = $direccion_valida = $email_valida = $telefono_valida = $celular_valida = $observacion_valida = '';
+if (isset($_REQUEST['ruc'])) {
+    if (empty($_POST["ruc"])) {
         echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Debe ingresar un número de cédula.
+            Debe ingresar el RUC. <strong>Los últimos 3 dígitos serán 001</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
         return;
     } else {
-        $cedula = validar_input($_POST["cedula"]);
-        if (!is_numeric($_POST["cedula"])) {
+        $ruc = validar_input($_POST["ruc"]);
+        if (!is_numeric($_POST["ruc"])) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            El campo #Documento solo recibe números.
+            El campo RUC solo recibe números.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
             return;
-        } elseif (strlen($_POST["cedula"]) != 10) {
+        } else if (strlen($_POST["ruc"]) != 13) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            El #Documento debe tener 10 números.
+            El RUC debe tener 13 números.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
             return;
+        } else if(!validaRuc($_POST["ruc"])){
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Formato de RUC inválido.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
         } else {
-            $cedula_valida = true;
+            $ruc_valida = true;
         }
     }
 }
-if (isset($_REQUEST['nombre'])) {
-    if (empty($_POST['nombre'])) {
+if (isset($_REQUEST['nombre_comercial'])) {
+    if (empty($_POST['nombre_comercial'])) {
         echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Debe ingresar un nombre.
+            Debe ingresar un nombre comercial.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
         return;
     } else {
-        $nombre = validar_input($_POST['nombre']);
-        if (!isValid($nombre)) {
+        $nombre_comercial = validar_input($_POST['nombre_comercial']);
+        if (!isValid($nombre_comercial)) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                El campo nombre solo acepta letras.
+                El campo Nombre Comercial solo acepta letras.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             return;
         } else {
-            $nombre_valida = true;
+            $nombre_comercial_valida = true;
+        }
+    }
+}
+if (isset($_REQUEST['nombre_contacto'])) {
+    if (empty($_POST['nombre_contacto'])) {
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Debe ingresar un nombre de contacto.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        return;
+    } else {
+        $nombre_contacto = validar_input($_POST['nombre_contacto']);
+        if (!isValid($nombre_contacto)) {
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                El campo Nombre de Contacto solo acepta letras.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+            return;
+        } else {
+            $nombre_contacto_valida = true;
         }
     }
 }
@@ -73,18 +97,6 @@ if (isset($_REQUEST['email'])) {
         } else {
             $email_valida = true;
         }
-    }
-}
-if (isset($_REQUEST['direccion'])) {
-    if (empty($_POST["direccion"])) {
-        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Ingresa una dirección.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>';
-        return;
-    } else {
-        $direccion = validar_input($_POST["direccion"]);
-        $direccion_valida = true;
     }
 }
 if (isset($_REQUEST['telefono'])) {
@@ -117,52 +129,65 @@ if (isset($_REQUEST['celular'])) {
     $celular = $_REQUEST['celular'];
     $celular_valida = true;
 }
+if (isset($_REQUEST['direccion'])) {
+    if (empty($_POST["direccion"])) {
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Ingresa una dirección.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        return;
+    } else {
+        $direccion = validar_input($_POST["direccion"]);
+        $direccion_valida = true;
+    }
+}
+if (isset($_REQUEST['observacion'])) {
+    $observacion = $_REQUEST['observacion'];
+    $observacion_valida = true;
+}
 
-//echo $nombre_valida.'<br>'.$cedula_valida.'<br>'.$email_valida.'<br>'.$direccion_valida.'<br>'.$telefono_valida.'<br>'.$celular_valida;
-
-if($nombre_valida == true && $direccion_valida == true && $cedula_valida == true && $email_valida == true && $telefono_valida == true && $celular_valida == true){
-    //echo 'ENTRA';
+if($nombre_comercial_valida == true && $nombre_contacto_valida == true && $ruc_valida == true && $email_valida == true && $telefono_valida == true && $celular_valida == true && $direccion_valida == true && $observacion_valida == true){
     if (isset($_REQUEST['id'])) {
         $id = $_REQUEST['id'];
-        $query = "update clientes set nombre='$nombre', cedula='$cedula', email='$email', direccion='$direccion', telefono='$telefono', celular='$celular' where id=$id";
+        $query = "update proveedores set nombre_comercial='$nombre_comercial', nombre_contacto='$nombre_contacto', ruc='$ruc', email='$email', direccion='$direccion', telefono='$telefono', celular='$celular', observacion='$observacion' where id=$id";
         $update = $gbd->prepare($query);
         $update->execute();
         //var_dump($update);
-        if ($update) {
+        if($update){
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Se actualizó el cliente
+                Se actualizó el Proveedor
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
-        } else {
+        }else{
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                No se pudo actualizar el cliente.
+                No se pudo actualizar el Proveedor.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         }
     } else {
-        //query para registrar el nuevo cliente.
-        $query = "select * from clientes where email=? or cedula=? ";
+        //query para registrar el nuevo Proveedor.
+        $query = "select * from proveedores where email=? or ruc=? ";
         $select = $gbd->prepare($query);
-        $select->execute(array($email, $cedula));
+        $select->execute(array($email, $ruc));
         if ($select->rowCount() > 0) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                El cliente ya se encuentra registrado
+                El Proveedor ya se encuentra registrado
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
-            $query = "insert into clientes (nombre, cedula, email, direccion, telefono, celular) 
-                values('$nombre', '$cedula', '$email', '$direccion', '$telefono', '$celular') ";
+            $query = "insert into proveedores (nombre_comercial, nombre_contacto, ruc, email, direccion, telefono, celular, observacion) 
+                values('$nombre_comercial', '$nombre_contacto', '$ruc', '$email', '$direccion', '$telefono', '$celular', '$observacion') ";
             $insert = $gbd->prepare($query);
             $insert->execute();
             //var_dump($insert);
             if ($insert) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Se agregó el cliente a la base de datos.
+                    Se agregó el Proveedor a la base de datos.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             } else {
                 echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    No se pudo crear el cliente. Error: '.$insert.'
+                    No se pudo crear el Proveedor. Error: '.$insert.'
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             }
@@ -171,4 +196,3 @@ if($nombre_valida == true && $direccion_valida == true && $cedula_valida == true
 }
 
 ?>
-

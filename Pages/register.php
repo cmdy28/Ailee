@@ -1,5 +1,6 @@
 <?php
 include '../class/conexion_admin.php';
+include '../subpages/functions.php';
 // Definir variables
 $empresa_Err = $email_Err = $direccion_Err = $telefono_Err = $nombre_contacto_Err = $pass_Err = "";
 $empresa = $email = $direccion = $telefono_contacto = $nombre_contacto = $pass = "";
@@ -52,7 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombre_contacto_Err = "Ingresa un nombre de contacto.";
     } else {
         $nombre_contacto = validar_input($_POST["nombre_contacto"]);
-        $valida_nombre_contacto = true;
+        if (!isValid($nombre_contacto)) {
+            $nombre_contacto_Err = "Ingresa solo letras.";
+        } else {
+            $valida_nombre_contacto = true;
+        }
     }
 
     if (empty($_POST["pass"])) {
@@ -105,7 +110,7 @@ if ($valida_empresa == true && $valida_direccion == true && $valida_email == tru
             $rowin = $insert->fetch(PDO::FETCH_ASSOC);
             $idregistro = $rowin['id'];
         }
-        
+
         // $base = 'base_'.$idregistro;
         // $query = "update empresas set base=:base where id=:id";
         // $insert = $gbd->prepare($query);
@@ -171,14 +176,6 @@ if ($valida_empresa == true && $valida_direccion == true && $valida_email == tru
         // $createtable2->execute();
     }
 }
-
-function validar_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -218,7 +215,7 @@ function validar_input($data)
                 <h4>Crea tu cuenta</h4>
                 <br>
                 <div class="contenedor-registro">
-                    <form action="register.php" method="post">
+                    <form action="../pages/register.php" method="post" id="register">
                         <span class="span-order">Datos Básicos</span>
                         <div class="row">
                             <div class="col-md-6">
@@ -297,5 +294,23 @@ function validar_input($data)
 
 
 </body>
-
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<!-- enviar formulario -->
+<!-- <script type="text/javascript">
+$('#register').submit(function() { // catch the form's submit event
+    $.ajax({ // create an AJAX call...
+        data: $(this).serialize(), // get the form data
+        type: $(this).attr('method'), // GET or POST
+        url: $(this).attr('action'), // the file to call
+        success: function(response) { // on success..
+            //console.log(response);
+            $('#respuesta').html(response);
+        },
+        error: function(response) {
+            $('#respuesta').html(response);
+        }
+    });
+    return false; // cancel original event to prevent form submitting
+}); -->
+</script>
 </html>

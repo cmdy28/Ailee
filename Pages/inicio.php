@@ -27,10 +27,22 @@ $empresa=$_SESSION['empresa'];
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
     <title><?php echo $title; ?></title>
+    <style>
+    /* .form-control:focus {
+        color: var(--bs-body-color);
+        background-color: var(--bs-form-control-bg);
+        border-color: #d1d1d1;
+        outline: none;
+        box-shadow: none;
+    }
+    .fa-solid{
+        color:#8b8b8b;
+    } */
+    </style>
 </head>
 
 <body>
-    <div>
+    <div class="menu-header">
         <?php 
         include './apariencia/header.php';
         include './apariencia/menu.php';
@@ -43,7 +55,7 @@ $empresa=$_SESSION['empresa'];
 		?>
     </div>
 
-
+    <!-- <footer> © Ailee - 2023</footer> -->
     <!-- crear alerta -->
     <script>
     function showAlert(type, message, duration) {

@@ -6,8 +6,8 @@ error_reporting(E_ALL);
 include '../../class/conexion.php';
 include '../../subpages/functions.php';
 
-$nombre = $cedula = $direccion = $email = $telefono = $celular = '';
-$nombre_valida = $cedula_valida = $direccion_valida = $email_valida = $telefono_valida = $celular_valida = false;
+$nombre = $cedula = $direccion = $email = $telefono = '';
+$nombre_valida = $cedula_valida = $direccion_valida = $email_valida = $telefono_valida = false;
 if (isset($_REQUEST['cedula'])) {
     if (empty($_POST["cedula"])) {
         echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -113,56 +113,53 @@ if (isset($_REQUEST['telefono'])) {
         }
     }
 }
-if (isset($_REQUEST['celular'])) {
-    $celular = $_REQUEST['celular'];
-    $celular_valida = true;
-}
+
 
 //echo $nombre_valida.'<br>'.$cedula_valida.'<br>'.$email_valida.'<br>'.$direccion_valida.'<br>'.$telefono_valida.'<br>'.$celular_valida;
 
-if($nombre_valida == true && $direccion_valida == true && $cedula_valida == true && $email_valida == true && $telefono_valida == true && $celular_valida == true){
+if($nombre_valida == true && $direccion_valida == true && $cedula_valida == true && $email_valida == true && $telefono_valida == true ){
     //echo 'ENTRA';
     if (isset($_REQUEST['id'])) {
         $id = $_REQUEST['id'];
-        $query = "update clientes set nombre='$nombre', cedula='$cedula', email='$email', direccion='$direccion', telefono='$telefono', celular='$celular' where id=$id";
+        $query = "update empleados set nombre='$nombre', cedula='$cedula', email='$email', direccion='$direccion', telefono='$telefono' where id=$id";
         $update = $gbd->prepare($query);
         $update->execute();
         //var_dump($update);
         if ($update) {
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Se actualizó el cliente
+                Se actualizó el empleado
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                No se pudo actualizar el cliente.
+                No se pudo actualizar el empleado.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         }
     } else {
-        //query para registrar el nuevo cliente.
-        $query = "select * from clientes where email=? or cedula=? ";
+        //query para registrar el nuevo empleado.
+        $query = "select * from empleados where email=? or cedula=? ";
         $select = $gbd->prepare($query);
         $select->execute(array($email, $cedula));
         if ($select->rowCount() > 0) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                El cliente ya se encuentra registrado
+                El empleado ya se encuentra registrado
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
-            $query = "insert into clientes (nombre, cedula, email, direccion, telefono, celular) 
-                values('$nombre', '$cedula', '$email', '$direccion', '$telefono', '$celular') ";
+            $query = "insert into empleados (nombre, cedula, email, direccion, telefono) 
+                values('$nombre', '$cedula', '$email', '$direccion', '$telefono') ";
             $insert = $gbd->prepare($query);
             $insert->execute();
             //var_dump($insert);
             if ($insert) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Se agregó el cliente a la base de datos.
+                    Se agregó el empleado a la base de datos.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             } else {
                 echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    No se pudo crear el cliente. Error: '.$insert.'
+                    No se pudo crear el empleado. Error: '.$insert.'
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             }

@@ -4,11 +4,19 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
 //Obtenemos los datos del proveedor
-$sql2 = " select * from proveedores";
-$stmtex = $gbd->query($sql2);
-$stmtex->execute();
-$datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
-//var_dump($datos);
+if (isset($_REQUEST['search'])) {
+    $search = $_REQUEST['search'];
+    $sql2 = " select * from proveedores where UPPER(nombre_comercial) like UPPER('%$search%') or ruc like '%$search%' or UPPER(email) like UPPER('%$search%') order by nombre_comercial ";
+    $stmtex = $gbd->query($sql2);
+    $stmtex->execute();
+    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $sql2 = " select * from proveedores order by nombre_comercial";
+    $stmtex = $gbd->query($sql2);
+    $stmtex->execute();
+    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+}
+
 ?>
 <div class="container-fluid">
     <div class="div-new">
@@ -21,7 +29,7 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
         <div>
             <div class="row">
                 <div class="col-md-5">
-                    <form action="" class="form">
+                    <form action="?modulo=proveedores" class="form" method="post">
                         <button>
                             <svg height="20" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
                                 aria-labelledby="search">
@@ -32,12 +40,16 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
                                 </path>
                             </svg>
                         </button>
-                        <input class="input" placeholder="Buscar" required="" type="text">
+                        <input class="input" placeholder="Buscar Proveedor / RUC" name="search" id="search" type="text">
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-icon" ><i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i></button>
-                    <button class="btn btn-icon"><i class="fa-solid fa-file-pdf" style="font-size:27px; color:#000"></i></button>
+                    <button class="btn btn-icon">
+                        <i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i>
+                    </button>
+                    <button class="btn btn-icon">
+                        <i class="fa-solid fa-file-pdf" style="font-size:27px; color:#000"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -46,17 +58,18 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
             <table class="table">
                 <thead class="bg-light-table">
                     <tr>
-                        <th scope="col" width=15%># Documento</th>
-                        <th scope="col" width=30%>Nombre Comercial</th>
-                        <th scope="col" width=30%>Contacto</th>
-                        <th scope="col" width=15%>email</th>
-                        <th scope="col" width=15%>Teléfono(s)</th>
+                        <th scope="col" width=15%>RUC</th>
+                        <th scope="col" width=15%>Proveedor</th>
+                        <th scope="col" width=15%>Contacto</th>
+                        <th scope="col" width=18%>email</th>
+                        <th scope="col" width=12%>Teléfono(s)</th>
+                        <th scope="col" width=15%>Dirección</th>
                         <th scope="col" width=10% style="text-align:center">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    foreach($datos as $data){
+                    foreach ($datos as $data) {
                         echo '<tr>
                         <th scope="row">'.$data['ruc'].'</th>
                         <td>'.$data['nombre_comercial'].'</td>
@@ -66,6 +79,7 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
                             <li>'.$data['telefono'].'</li>
                             <li>'.$data['celular'].'</li>
                         </td>
+                        <td>'.$data['direccion'].'</td>
                         <td style="text-align:center">
                             <a href="?modulo=nuevoproveedor&id='.$data['id'].'">
                                 <button class="btn btn-edit">
@@ -75,10 +89,9 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
                         </td>
                     </tr>';
                     }
-                    ?>
+?>
                 </tbody>
             </table>
-            
         </div>
     </div>
 </div>

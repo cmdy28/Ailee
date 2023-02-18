@@ -54,9 +54,8 @@
                             <a href="?modulo=productos" class="text-content">Productos</a>
                             <a href="?modulo=compras" class="text-content">Compras</a>
                             <a href="?modulo=proveedores" class="text-content">Proveedores</a>
-                            <a href="?modulo=procesamiento" class="text-content">Procesamiento</a>
-                            <a href="?modulo=fisico" class="text-content">Físico¿?</a>
-                            <a href="?modulo=cardex" class="text-content">Cardex¿?</a>
+                            <!-- <a href="?modulo=fisico" class="text-content">Físico¿?</a>
+                            <a href="?modulo=cardex" class="text-content">Cardex¿?</a> -->
                         </div>
                     </div>
                 </li>
