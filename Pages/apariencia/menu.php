@@ -13,9 +13,9 @@
         color:#fff;
     }
 
-    .active {
+    /* .active {
         background-color: #A8D95F;
-    }
+    } */
 
     .navbar-toggler {
         border: none;

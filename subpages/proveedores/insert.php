@@ -99,13 +99,35 @@ if (isset($_REQUEST['email'])) {
         }
     }
 }
-if (isset($_REQUEST['telefono'])) {
-    if (empty($_POST["telefono"])) {
+if (isset($_REQUEST['celular'])) {
+    if (empty($_POST["celular"])) {
         echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Ingresa un teléfono.
+            Ingresa un Celular.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         return;
+    } else {
+        $celular = validar_input($_POST["celular"]);
+        if (!is_numeric($_POST["celular"])) {
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            El campo Celular, solo permite números.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+            return;
+        } elseif (strlen($_POST["celular"]) != 10) {
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            El Celular debe tener 10 números.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+            return;
+        } else {
+            $celular_valida = true;
+        }
+    }
+}
+if (isset($_REQUEST['telefono'])) {
+    if (empty($_POST["telefono"])) {
+        $telefono_valida = true;
     } else {
         $telefono = validar_input($_POST["telefono"]);
         if (!is_numeric($_POST["telefono"])) {
@@ -114,9 +136,9 @@ if (isset($_REQUEST['telefono'])) {
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
             return;
-        } elseif (strlen($_POST["telefono"]) != 10) {
+        } elseif (strlen($_POST["telefono"]) != 9) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            El teléfono debe tener 10 números.
+            El teléfono debe tener 9 números. Formato: <strong>Código de la provincia, seguido del número de teléfono. Ejemplo: 020000000</strong> Sin espacios.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
             return;
@@ -124,10 +146,6 @@ if (isset($_REQUEST['telefono'])) {
             $telefono_valida = true;
         }
     }
-}
-if (isset($_REQUEST['celular'])) {
-    $celular = $_REQUEST['celular'];
-    $celular_valida = true;
 }
 if (isset($_REQUEST['direccion'])) {
     if (empty($_POST["direccion"])) {

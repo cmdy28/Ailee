@@ -79,19 +79,19 @@ if (isset($_REQUEST['id'])) {
             <br>
             <div class="row">
                 <div class="col-md-4">
-                    <label for="telefono">Teléfono</label>
-                    <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-phone"></i></span>
-                        <input class="form-control" placeholder="Teléfono" name="telefono" id="telefono" type="text"
-                            value="<?php echo $telefono ?>">
-                    </div>
-                </div>
-                <div class="col-md-4">
                     <label for="celular">Celular</label>
                     <div class="input-group flex-nowrap">
                     <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-phone"></i></span>
-                        <input class="form-control" placeholder="Teléfono Secundario (Opcional)" name="celular" id="celular" type="text"
+                        <input class="form-control" placeholder="Celular (5555551234)" name="celular" id="celular" type="text"
                             value="<?php echo $celular?>">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="telefono">Teléfono</label>
+                    <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-phone"></i></span>
+                        <input class="form-control" placeholder="Teléfono (00 000 0000)" name="telefono" id="telefono" type="text"
+                            value="<?php echo $telefono ?>">
                     </div>
                 </div>
             </div>

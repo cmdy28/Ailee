@@ -41,7 +41,7 @@ if (isset($_REQUEST['id'])) {
                 <div class="col-md-4">
                     <label for="ruc">RUC</label>
                     <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-id-card"></i></span>
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-id-card"></i></span>
                         <input class="form-control" placeholder="RUC" name="ruc" id="ruc" type="text"
                             value="<?php echo $ruc ?>">
                     </div>
@@ -52,23 +52,23 @@ if (isset($_REQUEST['id'])) {
                 <div class="col-md-4">
                     <label for="nombre_comercial">Nombre Comercial</label>
                     <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-truck"></i></span>
-                        <input class="form-control" placeholder="Proveedor (Nombre Comercial)" name="nombre_comercial" id="nombre_comercial" type="text"
-                            value="<?php echo $nombre_comercial ?>">
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-truck"></i></span>
+                        <input class="form-control" placeholder="Proveedor (Nombre Comercial)" name="nombre_comercial"
+                            id="nombre_comercial" type="text" value="<?php echo $nombre_comercial ?>">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <label for="nombre_contacto">Nombre Contacto</label>
                     <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-user"></i></span>
-                        <input class="form-control" placeholder="Nombre de Contacto" name="nombre_contacto" id="nombre_contacto" type="text"
-                            value="<?php echo $nombre_comercial ?>">
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-user"></i></span>
+                        <input class="form-control" placeholder="Nombre de Contacto" name="nombre_contacto"
+                            id="nombre_contacto" type="text" value="<?php echo $nombre_comercial ?>">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <label for="email">Correo Electrónico</label>
                     <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-envelope"></i></span>
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-envelope"></i></span>
                         <input class="form-control" placeholder="Correo Electrónico" name="email" id="email" type="text"
                             value="<?php echo $email ?>">
                     </div>
@@ -77,25 +77,27 @@ if (isset($_REQUEST['id'])) {
             <br>
             <div class="row">
                 <div class="col-md-4">
-                    <label for="telefono">Teléfono</label>
-                    <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-phone"></i></i></span>
-                        <input class="form-control" placeholder="Teléfono" name="telefono" id="telefono" type="text"
-                            value="<?php echo $telefono ?>">
-                    </div>
-                </div>
-                <div class="col-md-4">
                     <label for="celular">Celular</label>
                     <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-mobile-screen-button"></i></span>
+                        <span class="input-group-text" id="addon-wrapping"><i
+                                class="fa-solid fa-mobile-screen-button"></i></span>
                         <input class="form-control" placeholder="Celular" name="celular" id="celular" type="text"
                             value="<?php echo $celular ?>">
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <label for="telefono">Teléfono</label>
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-phone"></i></span>
+                        <input class="form-control" placeholder="Teléfono" name="telefono" id="telefono" type="text"
+                            value="<?php echo $telefono ?>">
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <label for="direccion">Dirección</label>
                     <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-location-dot"></i></span>
+                        <span class="input-group-text" id="addon-wrapping"><i
+                                class="fa-solid fa-location-dot"></i></span>
                         <input class="form-control" placeholder="Dirección" name="direccion" id="direccion" type="text"
                             value="<?php echo $direccion ?>">
                     </div>
@@ -106,8 +108,9 @@ if (isset($_REQUEST['id'])) {
                 <div class="col-md-12">
                     <label for="observacion">Observación</label>
                     <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-eye"></i></span>
-                    <textarea class="form-control" placeholder="Observacion" name="observacion" id="observacion" cols="30" rows="3">
+                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-eye"></i></span>
+                        <textarea class="form-control" placeholder="Observacion" name="observacion" id="observacion"
+                            cols="30" rows="3">
                     <?php echo $observacion ?>
                     </textarea>
                     </div>

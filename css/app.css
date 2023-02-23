@@ -332,3 +332,52 @@ label {
 .span-checkbox{
   font-size: 14px;
 }
+.div-facturacion{
+  background-color: #2e2e2e;
+  text-align: center;
+}
+.div-subtotal{
+  background-color: #f2f2f2;
+}
+.subtotal-iva{
+  font-size: 12px;
+  font-weight: bold;
+  color: #505050;
+}
+.valor-precio{
+  font-size: 13px;
+  color: #0b4e90;
+}
+.fa-trash{
+  color: #8d8d8d;
+}
+.fa-xmark{
+  color: #000;
+}
+.button-trash{
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  
+}
+.div-mesa{
+  border:rgb(152, 152, 152) solid 1px;
+  background-color: #121b26;
+  text-align: center;
+  padding: 15px 0px 0px 0px;
+  border-radius: 10px;
+}
+.nombre-mesa{
+  color: #fff;
+  font-size: 20px;
+}
+.btn-mesa{
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+.div-container-mesa{
+  padding: 0px 5px 0px 5px;
+  margin-bottom: 10px;
+}
