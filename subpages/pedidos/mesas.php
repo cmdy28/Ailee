@@ -35,7 +35,7 @@ $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
                         $icon = '../assets/img/img-app/ocupado.png';
                     }
                     echo '<div class="col-md-2 div-container-mesa">
-                    <div class="div-mesa"><button class="btn-mesa">
+                    <div class="div-mesa"><button class="btn-mesa"></button>
                     <img src="'.$icon.'" width="150px" alt="">
                     <p class="nombre-mesa">'.$mesa['nombre'].'</p>
                 </button></div>
