@@ -16,7 +16,7 @@
 			'menu' => array('path' => '../subpages/pedidos/index.php','title' => 'Menú POS'),
 			'mesas' => array('path' => '../subpages/pedidos/mesas.php','title' => 'Mesas'),
 			'historial' => array('path' => '../subpages/pedidos/historial.php','title' => 'Historial Pedidos'),
-			'comandera' => array('path' => '../subpages/pedidos/comandera.php','title' => 'Comandera Visual'),
+			'comandera' => array('path' => '../subpages/pedidos/comandera.php','title' => 'Comandera - Pedidos'),
 			'productos' => array('path' => '../subpages/productos/index.php','title' => 'Productos'),
 			'nuevoproducto' => array('path' => '../subpages/productos/new.php','title' => 'Agregar / Editar Producto'),
 			'compras' => array('path' => '../subpages/provision/compras.php','title' => 'Compras'),

@@ -1,3 +1,19 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include '../class/conexion.php';
+
+$sql2 = " select * from categorias";
+$stmtex = $gbd->query($sql2);
+$stmtex->execute();
+$datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = " select * from productos";
+$stmtex1 = $gbd->query($sql);
+$stmtex1->execute();
+$productos = $stmtex1->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,41 +30,76 @@
                 <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-8">
-                            <label for="" class="form-label">Cliente</label>
-                            <input type="text" placeholder="Buscar Cliente" class="form-control">
+                        <label for="" class="form-label">Cliente</label>
+                            <div class="input-group flex-nowrap">
+                                <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-user"></i></span>
+                                <input class="form-control" placeholder="Buscar Producto / Código" name="nombre"
+                                    id="nombre" type="text">
+                            </div>
                         </div>
                         <div class="col-md-4">
-                        <label for="" class="form-label">#Documento</label>
+                            <label for="" class="form-label">#Documento</label>
                             <input type="text" placeholder="Doc.# 000-000-0000000000" disabled class="form-control">
                         </div>
                     </div>
-                    <div>
-                    <div>
-                            <label for="" class="form-label">Producto</label>
-                            <input type="text" placeholder="Buscar Producto" class="form-control">
-                        </div>
-                    </div>
                     <hr>
-                    <nav>
-                        <div class="nav nav-pills" id="nav-tab" role="tablist">
-                            <button class="nav-link nav-tab active" id="nav-home-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
-                                aria-selected="true">Home</button>
-                            <button class="nav-link nav-tab" id="nav-profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
-                                aria-selected="false">Profile</button>
-                            <button class="nav-link nav-tab" id="nav-contact-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                                aria-selected="false">Contact</button>
+                    <div class="row">
+                        <div class="col-md-3 div-filtro">
+                            <form action="?modulo=menu" method="post">
+                                <label for="nombre">Productos</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping"><i
+                                            class="fa-solid fa-box"></i></span>
+                                    <input class="form-control" placeholder="Buscar Producto / Código" name="nombre"
+                                        id="nombre" type="text">
+                                </div>
+                            </form>
+                            <!-- <form action="">
+                            <label for="nombre">Filtrar por Categoría</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping"><i
+                                            class="fa-solid fa-tag"></i></span>
+                                    <select class="form-control" name="categoria" id="categoria">
+                                        <option value="" disabled>--Selecciona una Categoría--</option>
+                                        <option value="" >Todas</option>
+                                        <?php
+                                            foreach ($datos as $cate) {
+                                                echo '<option value="'.$cate['id'].'">'.$cate['nombre'].'</option>';
+                                            }
+                                        ?>
+                                    </select>
+
+                                </div>
+                            </form> -->
+                            <label for="categoria">Filtrar por Categoría</label>
+                            <hr>
+                            <div class="div-categorias">
+                                <?php
+foreach ($datos as $cate) {
+    echo '<a class="link-categoria" href="?modulo=menu&categoria='.$cate['id'].'"><div class="container-link-categoria" style="background-color:'.$cate['color'].'">'.$cate['nombre'].'</div></a>';
+}
+?>
+                            </div>
                         </div>
-                    </nav>
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                            aria-labelledby="nav-home-tab" tabindex="0">UNO</div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
-                            tabindex="0">DOS</div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"
-                            tabindex="0">TRES</div>
+                        <div class="col-md-9">
+                            <div class="container-productos">
+                                <div class="row">
+                                    <?php
+                            foreach ($productos as $product) {
+                                echo '<div class="col-md-2 col-product">
+                                <button class="btn-product">
+                                <div class="container-producto" style="background-color:'.$product['color'].'">
+                                    <span class="text-producto">'.$product['nombre'].'</span>
+                                    <br>
+                                    <span class="text-producto-precio">$'.$product['precio_sin_iva'].'</span>
+                                </div>
+                                </button>
+                                </div>';
+                                }
+                            ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3">

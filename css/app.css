@@ -338,6 +338,7 @@ label {
 }
 .div-subtotal{
   background-color: #f2f2f2;
+  padding: 5px 10px;
 }
 .subtotal-iva{
   font-size: 12px;
@@ -380,4 +381,107 @@ label {
 .div-container-mesa{
   padding: 0px 5px 0px 5px;
   margin-bottom: 10px;
+}
+.div-product{
+  background-color: #c9c9c9;
+  border-radius: 6px;
+  border: solid #505050 1px;
+  padding: 10px;
+  text-align: center;
+}
+.row-product{
+  padding: 3px;
+}
+.text-producto{
+  font-size: 15px;
+  color: #fff;
+  font-weight: bold;
+}
+.text-producto-precio{
+  font-size: 13px;
+  color: #fff;
+}
+.fa-plus{
+  color: #fff;
+}
+.custom-tooltip{
+  --bs-tooltip-bg: #82bf26;
+}
+.header-comandera{
+  background-color: #121b26;
+  text-align: center;
+  color: #fff;
+  padding: 15px 5px;
+}
+.container-comandera-pedido{
+  border: solid #82bf26 1px;
+  border-radius: 6px;
+}
+.comandera-div-header{
+  background-color: #82bf26;
+  color: #fff;
+  border-radius: 6px 6px 0px 0px;
+  padding: 15px;
+  text-align: right;
+}
+.comandera-div-content{
+  padding: 0px 10px;
+  background-color: #f6ffe9;
+}
+.comandera-mesa{
+  text-align: center;
+  padding: 10px 0px;
+  font-weight: 200;
+  font-size: 20px;
+}
+.comandera-products{
+  padding: 5px 15px;
+  font-weight: 300;
+
+}
+.comandera-despacha{
+  padding: 20px;
+  text-align: center;
+}
+.div-filtro{
+  border-right: solid #dadada 1px;
+}
+.link-categoria{
+  text-decoration: none;
+  color: #ffffff;
+}
+.link-categoria:hover{
+  text-decoration: none;
+  color: #202020;
+}
+.container-link-categoria{
+  padding: 7px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.container-link-categoria:hover{
+  opacity: 0.95;
+}
+
+.div-categorias{
+  overflow: scroll;
+  height: 300px;
+}
+.container-productos{
+  overflow: scroll;
+  height: 430px;
+}
+.container-producto{
+  border-radius: 6px;
+  border: solid #f2f2f2 1px;
+  padding: 10px;
+  text-align: center;
+  height: 100px;
+}
+.col-product{
+  padding: 1px;
+}
+.btn-product{
+  border: none;
+  width: 100%;
 }

@@ -54,6 +54,11 @@ if(strlen($id) <= 3){
         color:#fff;
         font-size:20px;
     }
+    .hora:hover{
+        text-decoration:none;
+        color:#fff;
+        font-size:20px;
+    }
     .sup{
         font-size:11px;
         color:#82BF26;
@@ -103,7 +108,7 @@ if(strlen($id) <= 3){
             <span class="text-ailee">AILEE <sup class="sup"><?php echo $id ?></sup></span>
         </a>
         <div>
-            <a class="hora">00:00:00</a>
+            <a class="hora"><?php echo $title; ?></a>
         </div>
         <div>
             <a class="nav-link text-light info" href="#">

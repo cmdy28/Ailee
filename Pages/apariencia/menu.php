@@ -84,7 +84,6 @@
                             <a href="?modulo=general" class="text-content">General</a>
                             <a href="?modulo=usuarios" class="text-content">Administrar Usuarios</a>
                             <a href="?modulo=conf_menu" class="text-content">Conf. Menú</a>
-                            <a href="?modulo=conf_mesas" class="text-content">Conf. Mesas</a>
                             <a href="?modulo=conf_comandera" class="text-content">Conf. Comandera Visual</a>
                         </div>
                     </div>

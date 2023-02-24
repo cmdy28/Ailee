@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
 
-$sql2 = " select * from categoria";
+$sql2 = " select * from categorias";
 $stmtex = $gbd->query($sql2);
 $stmtex->execute();
 $categorias = $stmtex->fetchAll(PDO::FETCH_ASSOC);
@@ -49,8 +49,8 @@ if (isset($_REQUEST['id'])) {
 
 <div class="container-fluid">
     <div id="respuesta"></div>
-    
-    <div class="div-new"> 
+
+    <div class="div-new">
         <div>
             <a href="?modulo=productos"><Button class="btn btn-regresar">Regresar</Button></a>
             <h5>Agregar / Editar Producto</h5>
@@ -173,7 +173,7 @@ if (isset($_REQUEST['id'])) {
     Launch demo modal
 </button>
 
-<!-- Modal -->
+<!-- Modal Nueva Categoría-->
 <div class="modal fade" id="categoriaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -184,16 +184,27 @@ if (isset($_REQUEST['id'])) {
             <div class="modal-body">
                 <form action="../subpages/productos/insert_categoria.php" method="post" id="categoriaForm">
                     <div>
-                    <label for="categoria_new">Nombre Categoría</label>
-                    <div class="input-group flex-nowrap">
-                        <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-tag"></i></span>
-                        <input class="form-control" placeholder="" name="categoria_new" id="categoria_new" type="text">
+                        <label for="categoria_new">Nombre Categoría</label>
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-tag"></i></span>
+                            <input class="form-control" placeholder="" name="categoria_new" id="categoria_new"
+                                type="text">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                    <div class="col-md-6">
+                        <label for="">Selecciona el color de la categoría</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="color" name="color" id="color">
                     </div>
                     </div>
+                    <br>
                     <div class="modal-footer">
-                <button type="button" class="btn btn-regresar" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-guardar" data-bs-dismiss="modal">Guardar</button>
-            </div>
+                        <button type="button" class="btn btn-regresar" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-guardar" data-bs-dismiss="modal">Guardar</button>
+                    </div>
                 </form>
             </div>
             <!-- <div class="modal-footer">
@@ -207,7 +218,7 @@ if (isset($_REQUEST['id'])) {
 
 <!-- enviar formulario -->
 <script type="text/javascript">
-$('#formCliente').submit(function() { // catch the form's submit event
+$('#formProducto').submit(function() { // catch the form's submit event
     $.ajax({ // create an AJAX call...
         data: $(this).serialize(), // get the form data
         type: $(this).attr('method'), // GET or POST
@@ -224,17 +235,17 @@ $('#formCliente').submit(function() { // catch the form's submit event
     return false; // cancel original event to prevent form submitting
 });
 
-$('#formCategoria').submit(function() { // catch the form's submit event
+$('#categoriaForm').submit(function() { // catch the form's submit event
     $.ajax({ // create an AJAX call...
         data: $(this).serialize(), // get the form data
         type: $(this).attr('method'), // GET or POST
         url: $(this).attr('action'), // the file to call
         success: function(response) { // on success..
             console.log(response);
-            $('#respuesta1').html(response);
+            $('#respuesta').html(response);
         },
         error: function(response) {
-            $('#respuesta1').html(response);
+            $('#respuesta').html(response);
         }
     });
 
@@ -248,7 +259,7 @@ function nuevaCategoria() {
     if (option_value == "0") {
         console.log('entra en condicional');
         //$('#abreModalCategoria').click();
-        $("#categoriaModal").modal("show");  
+        $("#categoriaModal").modal("show");
     }
 }
 </script>

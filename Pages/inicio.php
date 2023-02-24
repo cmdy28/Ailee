@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('America/Guayaquil');
 require_once '../class/public.class.php';
 session_start();
-$init = new InitTicket;
+$init = new InitTicket();
 $title=$init->title;
 $empresa=$_SESSION['empresa'];
 ?>
@@ -17,15 +17,20 @@ $empresa=$_SESSION['empresa'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css"> -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../plugins/fontawesome-free-6.2.1-web/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="shortcut icon" href="../assets/img/ailee-green-bg-dark-t-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/app.css">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="../plugins/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
     <title><?php echo $title; ?></title>
     <style>
     /* .form-control:focus {
@@ -43,19 +48,25 @@ $empresa=$_SESSION['empresa'];
 
 <body>
     <div class="menu-header">
-        <?php 
+        <?php
         include './apariencia/header.php';
-        include './apariencia/menu.php';
-        ?>
+include './apariencia/menu.php';
+?>
     </div>
     <br>
     <div class="subpages">
         <?php
-		    include $init->subpagePath;
-		?>
+    include $init->subpagePath;
+?>
     </div>
 
     <!-- <footer> © Ailee - 2023</footer> -->
+    <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    </script>
     <!-- crear alerta -->
     <script>
     function showAlert(type, message, duration) {
