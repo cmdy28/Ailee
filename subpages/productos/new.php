@@ -79,8 +79,8 @@ if (isset($_REQUEST['id'])) {
                     <label for="precio_con_iva">Categoría</label>
                     <div class="input-group flex-nowrap">
                         <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-tag"></i></span>
-                        <select class="form-control" name="categoria" id="categoria" onchange="nuevaCategoria()">
-                            <option value="">--Selecciona una Categoría--</option>
+                        <select class="form-control" data-placeholder="Selecciona una categoría" name="categoria" id="categoria" onchange="nuevaCategoria()">
+                            <option value=""></option>
                             <?php
                             foreach ($categorias as $cate) {
                                 echo '<option value='.$cate['id'].'>'.$cate['nombre'].'</option>';
@@ -155,7 +155,7 @@ if (isset($_REQUEST['id'])) {
                 </div>
                 <div class="col-md-2">
                     <label for="">Selecciona el color del Producto</label>
-                    <input class="form-control" type="color" name="color" id="color">
+                    <input class="form-control" type="color" name="color" id="color" value="<?php echo $color ?>">
                 </div>
             </div>
             <br>
@@ -218,6 +218,7 @@ if (isset($_REQUEST['id'])) {
 
 <!-- enviar formulario -->
 <script type="text/javascript">
+$('#categoria').select2();
 $('#formProducto').submit(function() { // catch the form's submit event
     $.ajax({ // create an AJAX call...
         data: $(this).serialize(), // get the form data

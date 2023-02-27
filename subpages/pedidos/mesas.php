@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
-$sql2 = " select * from mesas";
+$sql2 = " select * from mesas order by nombre";
 $stmtex = $gbd->query($sql2);
 $stmtex->execute();
 $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);

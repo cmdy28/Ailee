@@ -1,11 +1,9 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../../class/conexion.php';
 include '../../subpages/functions.php';
-
 $nombre = $cedula = $direccion = $email = $telefono = $celular = '';
 $nombre_valida = $cedula_valida = $direccion_valida = $email_valida = $telefono_valida = $celular_valida = false;
 if (isset($_REQUEST['cedula'])) {
@@ -135,9 +133,6 @@ if (isset($_REQUEST['telefono'])) {
         }
     }
 }
-
-//echo $nombre_valida.'<br>'.$cedula_valida.'<br>'.$email_valida.'<br>'.$direccion_valida.'<br>'.$telefono_valida.'<br>'.$celular_valida;
-
 if ($nombre_valida == true && $direccion_valida == true && $cedula_valida == true && $email_valida == true && $telefono_valida == true && $celular_valida == true) {
     //echo 'ENTRA';
     if (isset($_REQUEST['id'])) {

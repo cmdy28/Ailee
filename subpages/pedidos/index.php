@@ -13,6 +13,12 @@ $sql = " select * from productos";
 $stmtex1 = $gbd->query($sql);
 $stmtex1->execute();
 $productos = $stmtex1->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = " select * from clientes";
+$stmtex2 = $gbd->query($sql);
+$stmtex2->execute();
+$clientes = $stmtex2->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,11 +36,20 @@ $productos = $stmtex1->fetchAll(PDO::FETCH_ASSOC);
                 <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-8">
-                        <label for="" class="form-label">Cliente</label>
+                            <label for="" class="form-label">Cliente</label>
                             <div class="input-group flex-nowrap">
-                                <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-user"></i></span>
-                                <input class="form-control" placeholder="Buscar Producto / Código" name="nombre"
-                                    id="nombre" type="text">
+                                <span class="input-group-text" id="addon-wrapping"><i
+                                        class="fa-solid fa-user"></i></span>
+                                <select class="form-control" data-placeholder="Buscar Cliente / Cédula"
+                                    name="cliente" id="cliente">
+                                    <option value=""></option>
+                                    <?php
+                                        foreach ($clientes as $client) {
+                                            echo '<option value='.$client['id'].'>'.$client['cedula'].' | '.$client['nombre'].'</option>';
+                                        }
+                                    ?>
+                                    <!-- <option value="0">Nueva Categoría</option> -->
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -50,8 +65,16 @@ $productos = $stmtex1->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping"><i
                                             class="fa-solid fa-box"></i></span>
-                                    <input class="form-control" placeholder="Buscar Producto / Código" name="nombre"
-                                        id="nombre" type="text">
+                                            <select class="form-control" data-placeholder="Buscar Producto / Código"
+                                    name="producto" id="producto">
+                                    <option value=""></option>
+                                    <?php
+                                        foreach ($productos as $product) {
+                                            echo '<option value='.$product['id'].'>'.$product['codigo'].' | '.$product['nombre'].'</option>';
+                                        }
+                                    ?>
+                                    <!-- <option value="0">Nueva Categoría</option> -->
+                                </select>
                                 </div>
                             </form>
                             <!-- <form action="">
@@ -66,7 +89,7 @@ $productos = $stmtex1->fetchAll(PDO::FETCH_ASSOC);
                                             foreach ($datos as $cate) {
                                                 echo '<option value="'.$cate['id'].'">'.$cate['nombre'].'</option>';
                                             }
-                                        ?>
+?>
                                     </select>
 
                                 </div>
@@ -95,8 +118,8 @@ foreach ($datos as $cate) {
                                 </div>
                                 </button>
                                 </div>';
-                                }
-                            ?>
+                            }
+?>
                                 </div>
                             </div>
                         </div>
@@ -147,6 +170,12 @@ foreach ($datos as $cate) {
             </div>
         </div>
     </div>
+
+
+<script>
+    $('#cliente').select2();
+    $('#producto').select2();
+</script>
 </body>
 
 </html>

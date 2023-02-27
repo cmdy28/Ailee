@@ -2,17 +2,13 @@
 $id = $_SESSION['id'];
 $inicia = $_SESSION['inicia'];
 if(!$_SESSION['email'] && $_SESSION['inicia'] != 1){
-    session_destroy();
-    echo '<script>
-        alert("Debe iniciar sesión");
-        window.location="login.php";
-    </script>
-    ';
+    header("Location: ./logout.php");
 }
 
 if(strlen($id) <= 3){
     $id="00".$id;
 }
+
 ?>
 <style>
     .bg-nav-top {
@@ -119,11 +115,7 @@ if(strlen($id) <= 3){
                 <div class="dropdown-content-u" >
                     <a href="?modulo=perfil_usuario">Perfil</a>
                     <a href="?modulo=general">Configuración</a>
-                    <a href="login.php" style="border-top: solid 1px #767699">Cerrar Sesión 
-                    <?php
-					session_abort();
-					?>
-                    </a>
+                    <a href="./logout.php" style="border-top: solid 1px #767699">Cerrar Sesión </a>
                 </div>
             </div>
         </div>

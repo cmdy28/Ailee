@@ -1,4 +1,7 @@
 <?php
+function cerrarSesion(){
+    session_destroy();
+}
 //Validación de inputs de los formularios.
 function validar_input($data)
 {
@@ -17,7 +20,6 @@ function isValid($text){
         return false;
     }
 }
-
 //Valida el RUC ingresado
 function validaRuc($ruc){
     $response = preg_match("/001$/", $ruc); // Devuelve: 1

@@ -6,7 +6,8 @@ include '../class/conexion.php';
 //Obtenemos los datos del cliente
 if (isset($_REQUEST['search'])) {
     $search = $_REQUEST['search'];
-    $sql2 = " select * from clientes where UPPER(nombre) like UPPER('%$search%') or cedula like '%$search%' or UPPER(email) like UPPER('%$search%')  order by nombre";
+    $sql2 = " select * from clientes where UPPER(nombre) like UPPER('%$search%') 
+    or cedula like '%$search%' or UPPER(email) like UPPER('%$search%')  order by nombre";
     $stmtex = $gbd->query($sql2);
     $stmtex->execute();
     $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
