@@ -326,164 +326,167 @@ label {
   outline: none;
 }
 
-.checkbox-input{
+.checkbox-input {
   margin-right: 10px;
 }
-.span-checkbox{
+.span-checkbox {
   font-size: 14px;
 }
-.div-facturacion{
+.div-facturacion {
   background-color: #2e2e2e;
   text-align: center;
 }
-.div-subtotal{
+.div-subtotal {
   background-color: #f2f2f2;
   padding: 5px 10px;
 }
-.subtotal-iva{
+.subtotal-iva {
   font-size: 12px;
   font-weight: bold;
   color: #505050;
 }
-.valor-precio{
+.valor-precio {
   font-size: 13px;
   color: #0b4e90;
 }
-.fa-trash{
+.fa-trash {
   color: #8d8d8d;
 }
-.fa-xmark{
+.fa-xmark {
   color: #000;
 }
-.button-trash{
+.button-trash {
   background-color: transparent;
   border: none;
   padding: 0;
-  
 }
-.div-mesa{
-  border:rgb(152, 152, 152) solid 1px;
+.div-mesa {
+  border: rgb(152, 152, 152) solid 1px;
   background-color: #121b26;
   text-align: center;
   padding: 15px 0px 0px 0px;
   border-radius: 10px;
 }
-.nombre-mesa{
+.nombre-mesa {
   color: #fff;
   font-size: 20px;
 }
-.btn-mesa{
+.btn-mesa {
   background-color: transparent;
   border: none;
   width: 100%;
   height: 100%;
 }
-.div-container-mesa{
+.div-container-mesa {
   padding: 0px 5px 0px 5px;
   margin-bottom: 10px;
 }
-.div-product{
+.div-product {
   background-color: #c9c9c9;
   border-radius: 6px;
   border: solid #505050 1px;
   padding: 10px;
   text-align: center;
 }
-.row-product{
+.row-product {
   padding: 3px;
 }
-.text-producto{
+.text-producto {
   font-size: 15px;
   color: #fff;
   font-weight: bold;
 }
-.text-producto-precio{
+.text-producto-precio {
   font-size: 13px;
   color: #fff;
 }
-.fa-plus{
+.fa-plus {
   color: #fff;
 }
-.custom-tooltip{
+.custom-tooltip {
   --bs-tooltip-bg: #82bf26;
 }
-.header-comandera{
+.header-comandera {
   background-color: #121b26;
   text-align: center;
   color: #fff;
   padding: 15px 5px;
 }
-.container-comandera-pedido{
+.container-comandera-pedido {
   border: solid #82bf26 1px;
   border-radius: 6px;
 }
-.comandera-div-header{
+.comandera-div-header {
   background-color: #82bf26;
   color: #fff;
   border-radius: 6px 6px 0px 0px;
   padding: 15px;
   text-align: right;
 }
-.comandera-div-content{
+.comandera-div-content {
   padding: 0px 10px;
   background-color: #f6ffe9;
 }
-.comandera-mesa{
+.comandera-mesa {
   text-align: center;
   padding: 10px 0px;
   font-weight: 200;
   font-size: 20px;
 }
-.comandera-products{
+.comandera-products {
   padding: 5px 15px;
   font-weight: 300;
-
 }
-.comandera-despacha{
+.comandera-despacha {
   padding: 20px;
   text-align: center;
 }
-.div-filtro{
+.div-filtro {
   border-right: solid #dadada 1px;
 }
-.link-categoria{
+.link-categoria {
   text-decoration: none;
   color: #ffffff;
 }
-.link-categoria:hover{
+.link-categoria:hover {
   text-decoration: none;
-  color: #202020;
+  color: #d6d6d6;
 }
-.container-link-categoria{
+.container-link-categoria {
   padding: 7px;
   border-radius: 6px;
   margin-bottom: 10px;
 }
-.container-link-categoria:hover{
+.container-link-categoria:hover {
   opacity: 0.95;
 }
 
-.div-categorias{
+.div-categorias {
   overflow: scroll;
-  height: 300px;
+  height: 320px;
 }
-.container-productos{
+.container-productos {
   overflow: scroll;
   height: 430px;
+  background-color: #f2f2f2;
 }
-.container-producto{
+#product-content{
+  padding: 10px 20px;
+}
+.container-producto {
   border-radius: 6px;
   border: solid #f2f2f2 1px;
   padding: 10px;
   text-align: center;
   height: 100px;
 }
-.col-product{
-  padding: 1px;
+.col-product {
+  padding: 3px;
 }
-.btn-product{
+.btn-product {
   border: none;
   width: 100%;
+  border-radius: 6px;
 }
 
 /* select 2 */
@@ -502,12 +505,16 @@ label {
   -webkit-user-select: none;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
   color: #444;
   line-height: 34px;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
   height: 34px;
   position: absolute;
   top: 1px;
@@ -520,7 +527,27 @@ label {
   border-radius: 6px;
 }
 
-.select2-container--default .select2-results>.select2-results__options {
+.select2-container--default .select2-results > .select2-results__options {
   max-height: 200px;
   overflow: auto;
+  font-size: 13px;
 }
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: #999;
+  font-size: 13px;
+}
+
+.no-products{
+  text-align: center;
+}
+.msg-no-products{
+  color: #5c6673;
+  margin-top: 200px;
+}
+
+.input-cant{
+  width: 50px;
+  padding: 5px;
+}
+
