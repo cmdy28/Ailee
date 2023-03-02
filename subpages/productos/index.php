@@ -6,7 +6,7 @@ include '../class/conexion.php';
 //Obtenemos los datos del cliente
 if (isset($_REQUEST['search'])) {
     $search = $_REQUEST['search'];
-    $sql2 = " select * from productos where UPPER(nombre) like UPPER('%$search%') or codigo like '%$search%' order by nombre";
+    $sql2 = " select * from productos where UPPER(nombre) like UPPER('%$search%') or codigo like UPPER('%$search%') order by nombre";
     $stmtex = $gbd->query($sql2);
     $stmtex->execute();
     $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
@@ -40,40 +40,42 @@ if (isset($_REQUEST['search'])) {
                                 </path>
                             </svg>
                         </button>
-                        <input class="input" placeholder="Buscar Producto / Código" name="search" id="search" type="text">
+                        <input class="input" placeholder="Buscar Producto / Código" name="search" id="search"
+                            type="text">
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-icon" ><i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i></button>
-                    <button class="btn btn-icon"><i class="fa-solid fa-file-pdf" style="font-size:27px; color:#000"></i></button>
+                    <a href="../template/exceltemplates/excel_productos.php">
+                        <button class="btn btn-icon">
+                            <i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i>
+                        </button>
+                    </a>
+                    <button class="btn btn-icon"><i class="fa-solid fa-file-pdf"
+                            style="font-size:27px; color:#000"></i></button>
                 </div>
             </div>
         </div>
         <br>
-        <div>
+        <div class="table-responsive">
             <table class="table">
                 <thead class="bg-light-table">
                     <tr>
-                        <th scope="col" width=15%>Código</th>
-                        <th scope="col" width=35%>Producto</th>
+                        <th scope="col" width=20%>Código</th>
+                        <th scope="col" width=50%>Producto</th>
                         <th scope="col" width=10%>Precio Sin IVA.</th>
                         <th scope="col" width=10%>Precio Con IVA.</th>
-                        <th scope="col" width=10%>IVA en Venta</th>
-                        <th scope="col" width=10%>Servicio en Venta</th>
                         <th scope="col" width=10% style="text-align:center">Opciones</th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <?php
-                    foreach($datos as $data){
+                    foreach ($datos as $data) {
                         echo '<tr>
                         <th scope="row">'.$data['codigo'].'</th>
                         <td>'.$data['nombre'].'</td>
                         <td>'.$data['precio_sin_iva'].'</td>
                         <td>'.$data['precio_con_iva'].'</td>
-                        <td>'.$data['impuesto_iva'].'</td>
-                        <td>'.$data['impuesto_servicio'].'</td>
                         <td style="text-align:center">
                             <a href="?modulo=nuevoproducto&id='.$data['id'].'">
                                 <button class="btn btn-edit">
@@ -83,10 +85,10 @@ if (isset($_REQUEST['search'])) {
                         </td>
                     </tr>';
                     }
-                    ?>
+?>
                 </tbody>
             </table>
-            
+
         </div>
     </div>
 </div>

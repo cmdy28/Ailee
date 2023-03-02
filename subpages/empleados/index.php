@@ -50,7 +50,7 @@ if (isset($_REQUEST['search'])) {
             </div>
         </div>
         <br>
-        <div>
+        <div class="table-responsive">
             <table class="table">
                 <thead class="bg-light-table">
                     <tr>

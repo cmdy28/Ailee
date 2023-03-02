@@ -96,6 +96,9 @@ if(strlen($id) <= 3){
     .dropdown-u:hover .dropbtn {
         background-color: transparent;
     }
+    .dropbtn{
+        height:50px;
+    }
 </style>
 <nav class="navbar bg-nav-top">
     <div class="container-fluid">

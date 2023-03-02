@@ -551,3 +551,6 @@ label {
   padding: 5px;
 }
 
+.btn:focus {
+  outline: none;
+}

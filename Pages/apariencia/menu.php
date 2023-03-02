@@ -1,4 +1,13 @@
 <style>
+    .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin-bottom: 0;
+    list-style: none;
+    background-color: #f2f2f2;
+    height:45px;
+    }
     .bg-nav-bottom {
         background-color: #F2F2F2;
         box-shadow: 0px 15px 10px -20px #111;
@@ -28,7 +37,7 @@
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">

@@ -48,15 +48,14 @@ if (isset($_REQUEST['id'])) {
 ?>
 
 <div class="container-fluid">
-    <div id="respuesta"></div>
-
+    <div id="respuesta1"></div>
     <div class="div-new">
         <div>
             <a href="?modulo=productos"><Button class="btn btn-regresar">Regresar</Button></a>
             <h5>Agregar / Editar Producto</h5>
         </div>
         <hr>
-        <form id="formCliente" action='../subpages/productos/insert.php' name="formProducto" method="post">
+        <form id="formProducto" action='../subpages/productos/insert.php' name="formProducto" method="post">
             <?php echo $input_id; ?>
             <div class="row">
                 <div class="col-md-4">
@@ -77,10 +76,10 @@ if (isset($_REQUEST['id'])) {
                 </div>
                 <div class="col-md-4">
                     <label for="precio_con_iva">Categoría</label>
-                    <div class="input-group flex-nowrap">
+                    <div class="input-group flex-nowrap" id="listcategoria">
                         <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-tag"></i></span>
-                        <select class="form-control" data-placeholder="Selecciona una categoría" name="categoria" id="categoria" onchange="nuevaCategoria()">
-                            <option value=""></option>
+                        <select class="form-control" name="categoria" id="categoria" onchange="nuevaCategoria()">
+                            <option value="">--Selecciona una categoria--</option>
                             <?php
                             foreach ($categorias as $cate) {
                                 echo '<option value='.$cate['id'].'>'.$cate['nombre'].'</option>';
@@ -110,14 +109,14 @@ if (isset($_REQUEST['id'])) {
                         <span class="input-group-text" id="addon-wrapping"><i
                                 class="fa-solid fa-hand-holding-dollar"></i></span>
                         <input class="form-control" placeholder="0.00" name="precio_sin_iva" id="precio_sin_iva"
-                            type="text" value="<?php echo $precio_sin_iva ?>">
+                            type="number" step="any" value="<?php echo $precio_sin_iva ?>">
                     </div>
                     <label for="precio_con_iva">Precio con IVA</label>
                     <div class="input-group flex-nowrap">
                         <span class="input-group-text" id="addon-wrapping"><i
                                 class="fa-solid fa-hand-holding-dollar"></i></span>
                         <input class="form-control" placeholder="0.00" name="precio_con_iva" id="precio_con_iva"
-                            type="text" value="<?php echo $precio_con_iva ?>">
+                            type="number" step="any" value="<?php echo $precio_con_iva ?>">
                     </div>
                 </div>
 
@@ -145,11 +144,11 @@ if (isset($_REQUEST['id'])) {
                 <div class="col-md-2">
                     <label for="">Impuestos</label>
                     <div class="input-group flex-nowrap">
-                        <input type="checkbox" name="" id="" class="checkbox-input"><span class="span-checkbox"> IVA
+                        <input type="checkbox" name="impuesto_iva" id="impuesto_iva" class="checkbox-input"><span class="span-checkbox"> IVA
                             (12%)</span>
                     </div>
                     <div class="input-group flex-nowrap">
-                        <input type="checkbox" name="" id="" class="checkbox-input"> <span class="span-checkbox">
+                        <input type="checkbox" name="impuesto_servicio" id="impuesto_servicio" class="checkbox-input"> <span class="span-checkbox">
                             Servicio (10%)</span>
                     </div>
                 </div>
@@ -182,6 +181,7 @@ if (isset($_REQUEST['id'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div id="respuesta"></div>
                 <form action="../subpages/productos/insert_categoria.php" method="post" id="categoriaForm">
                     <div>
                         <label for="categoria_new">Nombre Categoría</label>
@@ -203,7 +203,7 @@ if (isset($_REQUEST['id'])) {
                     <br>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-regresar" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-guardar" data-bs-dismiss="modal">Guardar</button>
+                        <button type="submit" class="btn btn-guardar" >Guardar</button>
                     </div>
                 </form>
             </div>
@@ -216,9 +216,10 @@ if (isset($_REQUEST['id'])) {
 </div>
 
 
+
 <!-- enviar formulario -->
 <script type="text/javascript">
-$('#categoria').select2();
+//$('#categoria').select2();
 $('#formProducto').submit(function() { // catch the form's submit event
     $.ajax({ // create an AJAX call...
         data: $(this).serialize(), // get the form data
@@ -226,10 +227,10 @@ $('#formProducto').submit(function() { // catch the form's submit event
         url: $(this).attr('action'), // the file to call
         success: function(response) { // on success..
             console.log(response);
-            $('#respuesta').html(response);
+            $('#respuesta1').html(response);
         },
         error: function(response) {
-            $('#respuesta').html(response);
+            $('#respuesta1').html(response);
         }
     });
 
@@ -243,7 +244,16 @@ $('#categoriaForm').submit(function() { // catch the form's submit event
         url: $(this).attr('action'), // the file to call
         success: function(response) { // on success..
             console.log(response);
-            $('#respuesta').html(response);
+            var comprobar = response.includes("agrego");
+                if (comprobar == true) {
+                    $('#categoriaModal').modal('hide');
+                    $('#respuesta1').html(response);
+                    $("#listcategoria").load(location.href + " #listcategoria");
+                    var form = document.getElementById('categoriaForm');
+                    form.reset();
+                } else {
+                    $('#respuesta').html(response);
+                }
         },
         error: function(response) {
             $('#respuesta').html(response);
@@ -263,4 +273,25 @@ function nuevaCategoria() {
         $("#categoriaModal").modal("show");
     }
 }
+
+let precio_iva = document.querySelector('#precio_con_iva');
+let precio_sin_iva = document.querySelector('#precio_sin_iva');
+
+precio_iva.addEventListener('keyup',()=>{
+    val_precio_iva = parseFloat(precio_iva.value);
+    iva = parseFloat(0.12);
+    val_iva = val_precio_iva * iva;
+    real = val_precio_iva - val_iva;
+    precio_sin_iva.value = parseFloat(real.toFixed(2));
+});
+
+precio_sin_iva.addEventListener('keyup',()=>{
+    val_precio_sin_iva = parseFloat(precio_sin_iva.value);
+    iva = parseFloat(0.12);
+    val_iva = val_precio_sin_iva * iva;
+    real = val_precio_sin_iva + val_iva;
+    precio_iva.value = parseFloat(real.toFixed(2));
+});
+
+
 </script>
