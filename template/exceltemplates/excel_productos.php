@@ -29,9 +29,9 @@ $documento->getActiveSheet()->getStyle('A1')->getFont()->setBold(true)->setSize(
 $documento->getActiveSheet()->getStyle('A2:K2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('82bf26');
 
 # Encabezado de los cedula
-$encabezado = ["NOMBRE","CÓDIGO", "DESCRIPCIÓN", "CATEGORÍA", "PRECIO CON IVA", "PRECIO SIN IVA", "ES MATERIA PRIMA", "INCLUIR EN EL MENÚ", "¿IMPUESTO DE IVA?", "¿IMPUESTO DE SERVICIO?", "ESTADO"];
+$encabezado = ["PRODUCTO","CÓDIGO", "DESCRIPCIÓN", "CATEGORÍA", "PRECIO CON IVA", "PRECIO SIN IVA", "ES MATERIA PRIMA", "INCLUIR EN EL MENÚ", "¿IMPUESTO DE IVA?", "¿IMPUESTO DE SERVICIO?", "ESTADO"];
 # El último argumento es por defecto A1
-//$hojaDeProductos->fromArray($encabezado, null, 'A2')->getStyle('A2:K2')->getFont()->setBold(true)->setSize(12)->getColor()->setRGB('FFFFFF');
+$hojaDeProductos->fromArray($encabezado, null, 'A2')->getStyle('A2:K2')->getFont()->setBold(true)->setSize(12)->getColor()->setRGB('FFFFFF');
 
 $consulta = "select * from productos";
 $sentencia = $gbd->prepare($consulta, [
@@ -46,7 +46,7 @@ $nombre = $producto->nombre;
 $codigo = $producto->codigo;
 $descripcion = $producto->descripcion;
 $categoria = $producto->categoria;
-$precio_iva = $producto->precio_iva;
+$precio_iva = $producto->precio_con_iva;
 $precio_sin_iva = $producto->precio_sin_iva;
 $es_materia_prima = $producto->es_materia_prima;
 $incluir_en_menu = $producto->incluir_en_menu;

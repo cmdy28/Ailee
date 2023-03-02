@@ -31,7 +31,7 @@ $documento->getActiveSheet()->getStyle('A1')->getFont()->setBold(true)->setSize(
 $documento->getActiveSheet()->getStyle('A2:G2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('82bf26');
 
 # Encabezado de los cedula
-$encabezado = ["NOMBRE", "CÉDULA", "EMAIL", "TELÉFONO", "CELULAR", "DIRECCIÓN", "ESTADO"];
+$encabezado = ["CLIENTE", "CÉDULA", "EMAIL", "TELÉFONO", "CELULAR", "DIRECCIÓN", "ESTADO"];
 # El último argumento es por defecto A1
 $hojaDeClientes->fromArray($encabezado, null, 'A2')->getStyle('A2:G2')->getFont()->setBold(true)->setSize(12)->getColor()->setRGB('FFFFFF');
 
