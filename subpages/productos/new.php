@@ -3,11 +3,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
+include '../class/provision/producto.class.php';
+include '../class/provision/categoria.class.php';
+$productos = new Producto();
+$categorias = new Categoria();
 
-$sql2 = " select * from categorias";
-$stmtex = $gbd->query($sql2);
-$stmtex->execute();
-$categorias = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+$categorias = $categorias->traerCategorias($gbd);
 //var_dump($categorias);
 
 $input_id='';
@@ -26,11 +27,8 @@ $categoria = '';
 if (isset($_REQUEST['id'])) {
     $id=$_REQUEST['id'];
     $input_id='<input class="input" placeholder="" name="id" id="id" type="hidden" value="'.$id.'">';
-    //Obtenemos los datos del cliente
-    $sql2 = " select * from productos where id='$id'";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetch(PDO::FETCH_ASSOC);
+    //Obtenemos los productos
+    $datos=$productos->traerProducto($gbd, $id);
     //var_dump($datos);
     $nombre = $datos['nombre'];
     $codigo = $datos['codigo'];

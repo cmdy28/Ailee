@@ -4,6 +4,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../../class/conexion.php';
 include '../../subpages/functions.php';
+include '../../class/provision/proveedor.class.php';
+
+$proveedores = new Proveedor();
 //echo 'LLEGA';
 $nombre_comercial = $nombre_contacto = $ruc = $direccion = $email = $telefono = $celular = $observacion = '';
 $nombre_comercial_valida = $nombre_contacto_valida = $ruc_valida = $direccion_valida = $email_valida = $telefono_valida = $celular_valida = $observacion_valida = '';
@@ -167,9 +170,7 @@ if (isset($_REQUEST['observacion'])) {
 if($nombre_comercial_valida == true && $nombre_contacto_valida == true && $ruc_valida == true && $email_valida == true && $telefono_valida == true && $celular_valida == true && $direccion_valida == true && $observacion_valida == true){
     if (isset($_REQUEST['id'])) {
         $id = $_REQUEST['id'];
-        $query = "update proveedores set nombre_comercial='$nombre_comercial', nombre_contacto='$nombre_contacto', ruc='$ruc', email='$email', direccion='$direccion', telefono='$telefono', celular='$celular', observacion='$observacion' where id=$id";
-        $update = $gbd->prepare($query);
-        $update->execute();
+        $update=$proveedores->actualizarProveedor($gbd, $id, $nombre_comercial, $nombre_contacto, $ruc, $email, $direccion, $telefono, $celular, $observacion);
         //var_dump($update);
         if($update){
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -184,19 +185,14 @@ if($nombre_comercial_valida == true && $nombre_contacto_valida == true && $ruc_v
         }
     } else {
         //query para registrar el nuevo Proveedor.
-        $query = "select * from proveedores where email=? or ruc=? ";
-        $select = $gbd->prepare($query);
-        $select->execute(array($email, $ruc));
+       $select=$proveedores->validaProveedor($gbd, $email, $ruc);
         if ($select->rowCount() > 0) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                 El Proveedor ya se encuentra registrado
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
-            $query = "insert into proveedores (nombre_comercial, nombre_contacto, ruc, email, direccion, telefono, celular, observacion) 
-                values('$nombre_comercial', '$nombre_contacto', '$ruc', '$email', '$direccion', '$telefono', '$celular', '$observacion') ";
-            $insert = $gbd->prepare($query);
-            $insert->execute();
+            $insert=$proveedores->guardarProveedor($gbd, $nombre_comercial, $nombre_contacto, $ruc, $email, $direccion, $telefono, $celular, $observacion);
             //var_dump($insert);
             if ($insert) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">

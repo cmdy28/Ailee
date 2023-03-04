@@ -3,18 +3,15 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
+include '../class/provision/proveedor.class.php';
+
+$proveedores = new Proveedor();
 //Obtenemos los datos del proveedor
 if (isset($_REQUEST['search'])) {
     $search = $_REQUEST['search'];
-    $sql2 = " select * from proveedores where UPPER(nombre_comercial) like UPPER('%$search%') or ruc like '%$search%' or UPPER(email) like UPPER('%$search%') order by nombre_comercial ";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos=$proveedores->buscarProveedores($gbd, $search);
 } else {
-    $sql2 = " select * from proveedores order by nombre_comercial";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos=$proveedores->traerProveedores($gbd);
 }
 
 ?>

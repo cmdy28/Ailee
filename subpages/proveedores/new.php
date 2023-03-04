@@ -3,6 +3,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
+include '../class/provision/proveedor.class.php';
+
+$proveedores = new Proveedor();
 
 $input_id='';
 $nombre_comercial = $nombre_contacto = $ruc = $direccion = $email = $telefono = $celular = $observacion = '';
@@ -10,11 +13,8 @@ $nombre_comercial = $nombre_contacto = $ruc = $direccion = $email = $telefono = 
 if (isset($_REQUEST['id'])) {
     $id=$_REQUEST['id'];
     $input_id='<input class="input" placeholder="" name="id" id="id" type="hidden" value="'.$id.'">';
-    //Obtenemos los datos del cliente
-    $sql2 = " select * from proveedores where id='$id'";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetch(PDO::FETCH_ASSOC);
+    
+    $datos=$proveedores->traerProveedor($gbd, $id);
     //var_dump($datos);
     $nombre_comercial = $datos['nombre_comercial'];
     $nombre_contacto = $datos['nombre_contacto'];

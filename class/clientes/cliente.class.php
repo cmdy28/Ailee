@@ -14,7 +14,7 @@ class Cliente
 
     public function traerClientesExcel($gbd)
     {
-        $consulta = "select * from clientes";
+        $consulta = "select * from clientes order by nombre";
         $sentencia = $gbd->prepare($consulta, [
         PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL,
         ]);

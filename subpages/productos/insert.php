@@ -5,6 +5,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../../class/conexion.php';
 include '../../subpages/functions.php';
+include '../../class/provision/producto.class.php';
+
+$productos = new Producto();
 
 $nombre = $categoria = $descripcion = $codigo = $precio_sin_iva = $precio_con_iva = $es_materia_prima = $en_el_menu = $estado = $color = $impuesto_iva = $impuesto_servicio = '';
 $nombre_valida = $categoria_valida = $descripcion_valida = $codigo_valida = $precio_sin_iva_valida = $precio_con_iva_valida = $es_materia_prima_valida = $en_el_menu_valida = $estado_valida = $color_valida = $impuesto_iva_valida = $impuesto_servicio_valida = false;
@@ -45,10 +48,6 @@ if (isset($_REQUEST['categoria'])) {
         $categoria_valida = true;
     }
 }
-if(isset($_REQUEST['categoria'])){
-    $categoria = $_REQUEST['categoria'];
-    $categoria_valida = true;
-}
 if (isset($_REQUEST['descripcion'])) {
     $descripcion = validar_input($_POST["descripcion"]);
     $descripcion_valida = true;
@@ -69,70 +68,66 @@ if (isset($_REQUEST['precio_con_iva'])) {
         return;
     } else {
         $precio_con_iva = $_POST["precio_con_iva"];
-            $precio_con_iva_valida = true;
+        $precio_con_iva_valida = true;
     }
 }
-if (isset($_REQUEST['es_materia_prima'])){
-    if($_REQUEST['es_materia_prima'] = 'on'){
+if (isset($_REQUEST['es_materia_prima'])) {
+    if ($_REQUEST['es_materia_prima'] = 'on') {
         $es_materia_prima = 'true';
         $es_materia_prima_valida = true;
     }
-}else{
+} else {
     $es_materia_prima = 'false';
     $es_materia_prima_valida = true;
 }
-if (isset($_REQUEST['en_el_menu'])){
-    if($_REQUEST['en_el_menu'] = 'on'){
+if (isset($_REQUEST['en_el_menu'])) {
+    if ($_REQUEST['en_el_menu'] = 'on') {
         $en_el_menu = 'true';
         $en_el_menu_valida = true;
     }
-}else{
+} else {
     $en_el_menu = 'false';
     $en_el_menu_valida = true;
 }
-if (isset($_REQUEST['estado'])){
-    if($_REQUEST['estado'] = 'on'){
+if (isset($_REQUEST['estado'])) {
+    if ($_REQUEST['estado'] = 'on') {
         $estado = 3;
         $estado_valida = true;
     }
-}else{
+} else {
     $estado = 4;
     $estado_valida = true;
 }
-if (isset($_REQUEST['impuesto_iva'])){
-    if($_REQUEST['impuesto_iva'] = 'on'){
+if (isset($_REQUEST['impuesto_iva'])) {
+    if ($_REQUEST['impuesto_iva'] = 'on') {
         $impuesto_iva = 'true';
         $impuesto_iva_valida = true;
     }
-}else{
+} else {
     $impuesto_iva = 'false';
     $impuesto_iva_valida = true;
 }
-if (isset($_REQUEST['impuesto_servicio'])){
-    if($_REQUEST['impuesto_servicio'] = 'on'){
+if (isset($_REQUEST['impuesto_servicio'])) {
+    if ($_REQUEST['impuesto_servicio'] = 'on') {
         $impuesto_servicio = 'true';
         $impuesto_servicio_valida = true;
     }
-}else{
+} else {
     $impuesto_servicio = 'false';
     $impuesto_servicio_valida = true;
 }
-if (isset($_REQUEST['color'])){
-   $color = $_REQUEST['color'];
-   $color_valida = true;
+if (isset($_REQUEST['color'])) {
+    $color = $_REQUEST['color'];
+    $color_valida = true;
 }
 
-if ($nombre_valida == true && $descripcion_valida == true && $categoria_valida == true && $codigo_valida == true 
-&& $precio_sin_iva_valida == true && $precio_con_iva_valida == true && $es_materia_prima_valida == true 
-&& $en_el_menu_valida == true && $estado_valida == true && $impuesto_iva_valida == true && $impuesto_servicio_valida == true 
+if ($nombre_valida == true && $descripcion_valida == true && $categoria_valida == true && $codigo_valida == true
+&& $precio_sin_iva_valida == true && $precio_con_iva_valida == true && $es_materia_prima_valida == true
+&& $en_el_menu_valida == true && $estado_valida == true && $impuesto_iva_valida == true && $impuesto_servicio_valida == true
 && $color_valida == true) {
     if (isset($_REQUEST['id'])) {
         $id = $_REQUEST['id'];
-        $query = "update productos set nombre='$nombre', categoria='$categoria', codigo='$codigo', descripcion='$descripcion', 
-        precio_sin_iva='$precio_sin_iva', precio_con_iva='$precio_con_iva', es_materia_prima=$es_materia_prima, incluir_en_menu=$en_el_menu, 
-        estado=$estado, impuesto_iva=$impuesto_iva, impuesto_servicio=$impuesto_servicio, color='$color' where id=$id";
-        $update = $gbd->prepare($query);
-        $update->execute();
+        $update=$productos->actualizarProducto($gbd, $id, $nombre, $categoria, $codigo, $descripcion, $precio_sin_iva, $precio_con_iva, $es_materia_prima, $en_el_menu, $estado, $impuesto_iva, $impuesto_servicio, $color);
         //var_dump($update);
         if ($update) {
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -146,23 +141,17 @@ if ($nombre_valida == true && $descripcion_valida == true && $categoria_valida =
             </div>';
         }
     } else {
-        //query para registrar el nuevo producto.
-        $query = "select * from productos where codigo=? or nombre=? ";
-        $select = $gbd->prepare($query);
-        $select->execute(array($codigo, $nombre));
+        //validar que no exista el producto
+        $select=$productos->validaProducto($gbd, $codigo, $nombre);
+
         if ($select->rowCount() > 0) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                 El producto ya se encuentra registrado
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
-            $query = "insert into productos (nombre, categoria, codigo, descripcion, precio_sin_iva, precio_con_iva, 
-            es_materia_prima, incluir_en_menu, estado, impuesto_iva, impuesto_servicio, color) 
-                values('$nombre', $categoria, '$codigo', '$descripcion', $precio_sin_iva, $precio_con_iva, 
-                $es_materia_prima, $en_el_menu, $estado, $impuesto_iva, $impuesto_servicio, '$color') ";
-            $insert = $gbd->prepare($query);
-            $insert->execute();
-            var_dump($insert);
+            $insert=$productos->guardarProducto($gbd, $nombre, $categoria, $codigo, $descripcion, $precio_sin_iva, $precio_con_iva, $es_materia_prima, $en_el_menu, $estado, $impuesto_iva, $impuesto_servicio, $color);
+            //var_dump($insert);
             if ($insert) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
                     Se agregó el producto a la base de datos.

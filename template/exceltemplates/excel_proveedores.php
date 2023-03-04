@@ -3,6 +3,9 @@ require_once "../../vendor/autoload.php";
 
 # Nuestra base de datos
 include '../conexion.php';
+include '../../class/provision/proveedor.class.php';
+
+$proveedores = new Proveedor();
 
 //Librerias
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -35,11 +38,7 @@ $encabezado = ["NOMBRE COMERCIAL","CONTACTO", "RUC", "EMAIL", "TELÉFONO", "CELU
 # El último argumento es por defecto A1
 $hojaDeProveedores->fromArray($encabezado, null, 'A2')->getStyle('A2:H2')->getFont()->setBold(true)->setSize(12)->getColor()->setRGB('FFFFFF');
 
-$consulta = "select * from proveedores";
-$sentencia = $gbd->prepare($consulta, [
-PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL,
-]);
-$sentencia->execute();
+$sentencia=$proveedores->traerProveedoresExcel($gbd);
 # Comenzamos en la fila 3
 $numeroDeFila = 3;
 while ($proveedor = $sentencia->fetchObject()) {

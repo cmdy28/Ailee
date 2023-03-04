@@ -14,7 +14,7 @@ class Empleado
 
     public function traerEmpleadosExcel($gbd)
     {
-        $consulta = "select * from empleados";
+        $consulta = "select * from empleados order by nombre";
         $sentencia = $gbd->prepare($consulta, [
         PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL,
         ]);

@@ -3,18 +3,15 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
-//Obtenemos los datos del cliente
+include '../class/provision/producto.class.php';
+
+$productos = new Producto();
+
 if (isset($_REQUEST['search'])) {
     $search = $_REQUEST['search'];
-    $sql2 = " select * from productos where UPPER(nombre) like UPPER('%$search%') or codigo like UPPER('%$search%') order by nombre";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos=$productos->buscarProductos($gbd, $search);
 } else {
-    $sql2 = " select * from productos order by nombre";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos=$productos->traerProductos($gbd);
 }
 //Agregar filtro de categoría
 ?>
