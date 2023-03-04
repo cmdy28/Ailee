@@ -2,7 +2,7 @@
 require_once "../../vendor/autoload.php";
 
 # Nuestra base de datos
-include '../conexion.php';
+include '../../class/conexion.php';
 include '../../class/provision/proveedor.class.php';
 
 $proveedores = new Proveedor();

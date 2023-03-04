@@ -1,6 +1,9 @@
 <?php
 require_once "../../vendor/autoload.php";
-include '../conexion.php';
+include '../../class/conexion.php';
+include '../../class/provision/producto.class.php';
+
+$productos = new Producto();
 
 //Librerias
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -33,11 +36,7 @@ $encabezado = ["PRODUCTO","CÓDIGO", "DESCRIPCIÓN", "CATEGORÍA", "PRECIO CON I
 # El último argumento es por defecto A1
 $hojaDeProductos->fromArray($encabezado, null, 'A2')->getStyle('A2:K2')->getFont()->setBold(true)->setSize(12)->getColor()->setRGB('FFFFFF');
 
-$consulta = "select * from productos";
-$sentencia = $gbd->prepare($consulta, [
-PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL,
-]);
-$sentencia->execute();
+$sentencia=$productos->traerProductosExcel($gbd);
 # Comenzamos en la fila 3
 $numeroDeFila = 3;
 while ($producto = $sentencia->fetchObject()) {
