@@ -24,7 +24,7 @@ $hojaDeProductos->setTitle("Productos");
 
 $documento->getDefaultStyle()->getFont()->setName('Roboto');
 $hojaDeClientesMerge=$hojaDeProductos->mergeCells("A1:K1");
-$hojaDeProductos->setCellValue('A1',"Lista de Productos")->getStyle('A1')->getAlignment()->setHorizontal('center');
+$hojaDeProductos->setCellValue('A1',"LISTA DE PRODUCTOS")->getStyle('A1')->getAlignment()->setHorizontal('center');
 $documento->getActiveSheet()->getStyle('A1')->getFont()->setBold(true)->setSize(20)->getColor()->setRGB('82bf26');
 $documento->getActiveSheet()->getStyle('A2:K2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('82bf26');
 
@@ -69,7 +69,7 @@ $hojaDeProductos->setCellValueByColumnAndRow(11, $numeroDeFila, $estado)->getCol
 $numeroDeFila++;
 }
 
-$fecha_actual = date('Ymdhms');
+$fecha_actual = date('hmsYmd');
 $fileName = "listaProductos$fecha_actual.xlsx";
 # Crear un "escritor"
 $writer = new Xlsx($documento);

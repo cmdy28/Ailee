@@ -44,9 +44,11 @@ if (isset($_REQUEST['search'])) {
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-icon">
-                        <i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i>
-                    </button>
+                    <a href="../template/exceltemplates/excel_proveedores.php">
+                        <button class="btn btn-icon">
+                            <i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i>
+                        </button>
+                    </a>
                     <button class="btn btn-icon">
                         <i class="fa-solid fa-file-pdf" style="font-size:27px; color:#000"></i>
                     </button>

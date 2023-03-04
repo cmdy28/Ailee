@@ -3,18 +3,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
-//Obtenemos los datos del cliente
+include '../class/administrador/empleado.class.php';
+$empleados = new Empleado();
+
 if (isset($_REQUEST['search'])) {
     $search = $_REQUEST['search'];
-    $sql2 = " select * from empleados where UPPER(nombre) like UPPER('%$search%') or cedula like '%$search%' or UPPER(email) like UPPER('%$search%')  order by nombre";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos = $empleados->buscarEmpleados($gbd, $search);
 } else {
-    $sql2 = " select * from empleados order by nombre";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos = $empleados->traerEmpleados($gbd);
 }
 
 ?>
@@ -40,12 +36,18 @@ if (isset($_REQUEST['search'])) {
                                 </path>
                             </svg>
                         </button>
-                        <input class="input" placeholder="Buscar Empleado / Cédula / Email" name="search" id="search" type="text">
+                        <input class="input" placeholder="Buscar Empleado / Cédula / Email" name="search" id="search"
+                            type="text">
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-icon" ><i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i></button>
-                    <button class="btn btn-icon"><i class="fa-solid fa-file-pdf" style="font-size:27px; color:#000"></i></button>
+                    <a href="../template/exceltemplates/excel_empleados.php">
+                        <button class="btn btn-icon">
+                            <i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i>
+                        </button>
+                    </a>
+                    <button class="btn btn-icon"><i class="fa-solid fa-file-pdf"
+                            style="font-size:27px; color:#000"></i></button>
                 </div>
             </div>
         </div>
@@ -81,7 +83,7 @@ if (isset($_REQUEST['search'])) {
                     ?>
                 </tbody>
             </table>
-            
+
         </div>
     </div>
 </div>

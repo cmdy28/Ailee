@@ -1,9 +1,6 @@
 <?php
 include '../class/conexion_admin.php';
 session_start();
-if($_SESSION['email'] && $_SESSION['inicia'] = 1){
-    header("Location: ./inicio.php");
-}
 
 $email_Err = $pass_Err = "";
 $email = $pass = "";

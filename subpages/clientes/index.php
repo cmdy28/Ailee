@@ -3,19 +3,15 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
+include '../class/clientes/cliente.class.php';
+
+$clientes = new Cliente();
 //Obtenemos los datos del cliente
 if (isset($_REQUEST['search'])) {
     $search = $_REQUEST['search'];
-    $sql2 = " select * from clientes where UPPER(nombre) like UPPER('%$search%') 
-    or cedula like '%$search%' or UPPER(email) like UPPER('%$search%')  order by nombre";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos = $clientes->buscarClientes($gbd, $search);
 } else {
-    $sql2 = " select * from clientes order by nombre";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
+    $datos = $clientes->traerClientes($gbd);
 }
 
 ?>

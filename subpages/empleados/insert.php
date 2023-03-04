@@ -5,6 +5,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../../class/conexion.php';
 include '../../subpages/functions.php';
+include '../../class/administrador/empleado.class.php';
+$empleados = new Empleado();
+
 
 $nombre = $cedula = $direccion = $email = $telefono = '';
 $nombre_valida = $cedula_valida = $direccion_valida = $email_valida = $telefono_valida = false;
@@ -121,9 +124,7 @@ if($nombre_valida == true && $direccion_valida == true && $cedula_valida == true
     //echo 'ENTRA';
     if (isset($_REQUEST['id'])) {
         $id = $_REQUEST['id'];
-        $query = "update empleados set nombre='$nombre', cedula='$cedula', email='$email', direccion='$direccion', telefono='$telefono' where id=$id";
-        $update = $gbd->prepare($query);
-        $update->execute();
+        $update=$empleados->actualizarEmpleado($gbd, $id, $nombre, $cedula, $email, $direccion, $telefono);
         //var_dump($update);
         if ($update) {
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -137,20 +138,16 @@ if($nombre_valida == true && $direccion_valida == true && $cedula_valida == true
             </div>';
         }
     } else {
-        //query para registrar el nuevo empleado.
-        $query = "select * from empleados where email=? or cedula=? ";
-        $select = $gbd->prepare($query);
-        $select->execute(array($email, $cedula));
+        //valida que no exista el empleado
+        $select=$empleados->validaEmpleado($gbd, $email, $cedula);
         if ($select->rowCount() > 0) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                 El empleado ya se encuentra registrado
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
-            $query = "insert into empleados (nombre, cedula, email, direccion, telefono) 
-                values('$nombre', '$cedula', '$email', '$direccion', '$telefono') ";
-            $insert = $gbd->prepare($query);
-            $insert->execute();
+            //guarda al empleado en la base de datos
+            $insert=$empleados->guardarEmpleado($gbd, $nombre, $cedula, $email, $direccion, $telefono);
             //var_dump($insert);
             if ($insert) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">

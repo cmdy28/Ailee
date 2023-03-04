@@ -3,6 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
+include '../class/administrador/empleado.class.php';
+$empleados = new Empleado();
 
 $input_id='';
 $nombre = '';
@@ -10,22 +12,17 @@ $cedula = '';
 $direccion = '';
 $email = '';
 $telefono = '';
-$celular = '';
 if (isset($_REQUEST['id'])) {
     $id=$_REQUEST['id'];
     $input_id='<input class="input" placeholder="" name="id" id="id" type="hidden" value="'.$id.'">';
-    //Obtenemos los datos del cliente
-    $sql2 = " select * from clientes where id='$id'";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetch(PDO::FETCH_ASSOC);
+    //Obtenemos los datos del empleado
+    $datos=$empleados->traerEmpleado($gbd, $id);
     //var_dump($datos);
     $nombre = $datos['nombre'];
     $cedula = $datos['cedula'];
     $email = $datos['email'];
     $direccion = $datos['direccion'];
     $telefono = $datos['telefono'];
-    $celular = $datos['celular'];
 }
 ?>
 

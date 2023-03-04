@@ -4,6 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../../class/conexion.php';
 include '../../subpages/functions.php';
+include '../../class/clientes/cliente.class.php';
+
+$clientes = new Cliente();
+
 $nombre = $cedula = $direccion = $email = $telefono = $celular = '';
 $nombre_valida = $cedula_valida = $direccion_valida = $email_valida = $telefono_valida = $celular_valida = false;
 if (isset($_REQUEST['cedula'])) {
@@ -137,9 +141,7 @@ if ($nombre_valida == true && $direccion_valida == true && $cedula_valida == tru
     //echo 'ENTRA';
     if (isset($_REQUEST['id'])) {
         $id = $_REQUEST['id'];
-        $query = "update clientes set nombre='$nombre', cedula='$cedula', email='$email', direccion='$direccion', telefono='$telefono', celular='$celular' where id=$id";
-        $update = $gbd->prepare($query);
-        $update->execute();
+        $update = $clientes->actualizarCliente($gbd, $id, $nombre, $cedula, $email, $direccion, $telefono, $celular);
         //var_dump($update);
         if ($update) {
             echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -153,20 +155,16 @@ if ($nombre_valida == true && $direccion_valida == true && $cedula_valida == tru
             </div>';
         }
     } else {
-        //query para registrar el nuevo cliente.
-        $query = "select * from clientes where email=? or cedula=? ";
-        $select = $gbd->prepare($query);
-        $select->execute(array($email, $cedula));
+        //compueba que no exista el cliente
+        $select=$clientes->validaCliente($gbd, $email, $cedula);
         if ($select->rowCount() > 0) {
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                 El cliente ya se encuentra registrado
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
-            $query = "insert into clientes (nombre, cedula, email, direccion, telefono, celular) 
-                values('$nombre', '$cedula', '$email', '$direccion', '$telefono', '$celular') ";
-            $insert = $gbd->prepare($query);
-            $insert->execute();
+            //guarda el nuevo cliente
+            $insert=$clientes->guardarCliente($gbd,$nombre, $cedula, $email, $direccion, $telefono, $celular);
             //var_dump($insert);
             if ($insert) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">

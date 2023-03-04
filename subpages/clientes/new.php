@@ -3,6 +3,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
+include '../class/clientes/cliente.class.php';
+
+$clientes = new Cliente();
 
 $input_id='';
 $nombre = '';
@@ -15,10 +18,7 @@ if (isset($_REQUEST['id'])) {
     $id=$_REQUEST['id'];
     $input_id='<input class="input" placeholder="" name="id" id="id" type="hidden" value="'.$id.'">';
     //Obtenemos los datos del cliente
-    $sql2 = " select * from clientes where id='$id'";
-    $stmtex = $gbd->query($sql2);
-    $stmtex->execute();
-    $datos = $stmtex->fetch(PDO::FETCH_ASSOC);
+    $datos=$clientes->traerCliente($gbd, $id);
     //var_dump($datos);
     $nombre = $datos['nombre'];
     $cedula = $datos['cedula'];
