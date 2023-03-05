@@ -168,7 +168,7 @@ if ($nombre_valida == true && $direccion_valida == true && $cedula_valida == tru
             //var_dump($insert);
             if ($insert) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Se agregó el cliente a la base de datos.
+                    El cliente se agregó a la base de datos.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
             } else {

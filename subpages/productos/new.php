@@ -107,14 +107,14 @@ if (isset($_REQUEST['id'])) {
                         <span class="input-group-text" id="addon-wrapping"><i
                                 class="fa-solid fa-hand-holding-dollar"></i></span>
                         <input class="form-control" placeholder="0.00" name="precio_sin_iva" id="precio_sin_iva"
-                            type="number" step="any" value="<?php echo $precio_sin_iva ?>">
+                            type="text" step="any" value="<?php echo $precio_sin_iva ?>">
                     </div>
                     <label for="precio_con_iva">Precio con IVA</label>
                     <div class="input-group flex-nowrap">
                         <span class="input-group-text" id="addon-wrapping"><i
                                 class="fa-solid fa-hand-holding-dollar"></i></span>
                         <input class="form-control" placeholder="0.00" name="precio_con_iva" id="precio_con_iva"
-                            type="number" step="any" value="<?php echo $precio_con_iva ?>">
+                            type="text" step="any" value="<?php echo $precio_con_iva ?>">
                     </div>
                 </div>
 

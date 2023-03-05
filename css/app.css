@@ -462,11 +462,11 @@ label {
 }
 
 .div-categorias {
-  overflow: scroll;
-  height: 320px;
+  overflow-y: scroll;
+  height: 400px;
 }
 .container-productos {
-  overflow: scroll;
+  overflow-y: scroll;
   height: 430px;
   background-color: #f2f2f2;
 }
@@ -493,7 +493,7 @@ label {
 .select2-container--default .select2-selection--single {
   background-color: #fff;
   border: 1px solid #dadada;
-  border-radius: 6px;
+  border-radius: 0px;
 }
 
 .select2-container .select2-selection--single {
@@ -553,4 +553,83 @@ label {
 
 .btn:focus {
   outline: none;
+}
+.tabla-pedido{
+  max-height: 300px;
+  overflow: auto;
+}
+
+.btn-modal{
+  height: 25px;
+  padding: 0px;
+}
+
+.span-client{
+  background-color: transparent;
+  height: 35px;
+  padding: 5px;
+  border: none;
+}
+
+.a-client{
+  height: 25px;
+}
+.fa-circle-plus{
+  color: #000000;
+  font-size: 25px;
+}
+/* alerts */
+.alert {
+  position: relative;
+  padding: 7px;
+  margin-bottom: 1rem;
+  font-size: 15px;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+.alert-dismissible .btn-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 10px;
+}
+
+
+/* selectize */
+.selectize-control {
+  position: relative;
+  padding: 0px;
+  border: none;
+}
+
+.selectize-control.single .selectize-input {
+  box-shadow: 0 1px 0 rgb(0 0 0 / 5%), inset 0 1px 0 rgb(255 255 255 / 80%);
+  background-color: #ffffff;
+  background-image: none;
+  background-repeat: repeat-x;
+}
+
+/* modal factura */
+
+.div-botones-factura{
+  justify-content: center;
+}
+
+.header-modal-factura{
+  justify-content: center;
+  display: grid;
+  background-color: #f2f2f2;
+  padding: 40px 30px;
+}
+
+.div-img-exito{
+  text-align: center;
+}
+
+.factura-modal-body{
+  text-align: center;
+  background-color: #121B26;
+  color: #fff;
+  padding: 50px 20px;
 }
