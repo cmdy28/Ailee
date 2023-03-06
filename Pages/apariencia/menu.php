@@ -61,7 +61,7 @@
                         <button class="dropbtn nav-link-down">Provisión</button>
                         <div class="dropdown-content">
                             <a href="?modulo=productos" class="text-content">Productos</a>
-                            <a href="?modulo=compras" class="text-content">Compras</a>
+                            <!-- <a href="?modulo=compras" class="text-content">Compras</a> -->
                             <a href="?modulo=proveedores" class="text-content">Proveedores</a>
                             <!-- <a href="?modulo=fisico" class="text-content">Físico¿?</a>
                             <a href="?modulo=cardex" class="text-content">Cardex¿?</a> -->
@@ -73,7 +73,7 @@
                         <button class="dropbtn nav-link-down">Empleados</button>
                         <div class="dropdown-content">
                             <a href="?modulo=empleados" class="text-content">Lista</a>
-                            <a href="?modulo=registro_asistencia" class="text-content">Registro de Asistencia</a>
+                            <!-- <a href="?modulo=registro_asistencia" class="text-content">Registro de Asistencia</a> -->
                         </div>
                     </div>
                 </li>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <div class="dropdown">
                         <button class="dropbtn nav-link-down">Configuración</button>
                         <div class="dropdown-content">
@@ -96,7 +96,7 @@
                             <a href="?modulo=conf_comandera" class="text-content">Conf. Comandera Visual</a>
                         </div>
                     </div>
-                </li>
+                </li> -->
                 </li>
             </ul>
 

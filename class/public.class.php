@@ -53,7 +53,7 @@
             // $request = isset($_REQUEST['modulo']) ? $_REQUEST['modulo'] : 'login';
             // }
 
-            $request = isset($_REQUEST['modulo']) ? $_REQUEST['modulo'] : 'start';
+            $request = isset($_REQUEST['modulo']) ? $_REQUEST['modulo'] : 'menu';
 
             if (array_key_exists($request, $this -> pages)) {
                 $this -> subpagePath = $this -> pages[$request]['path'];

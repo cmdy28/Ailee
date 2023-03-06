@@ -22,6 +22,7 @@ $datosFacturas=$facturas->traerFacturas($gbd);
             <!-- <a href="?modulo=nuevocliente"><Button class="btn btn-nuevo">Nuevo Cliente</Button></a>
             <h5>Clientes</h5> -->
         </div>
+        <h4>Historial Pedidos</h4>
         <hr>
         <!-- <div>
             <div class="row">

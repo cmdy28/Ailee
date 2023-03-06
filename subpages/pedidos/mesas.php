@@ -41,16 +41,23 @@ if (count($datos) < 1) {
                 foreach ($datos as $mesa) {
                     if ($mesa['estado'] == 1) {
                         $icon = '../assets/img/img-app/libre.png';
-                    }
-                    if ($mesa['estado'] == 2) {
-                        $icon = '../assets/img/img-app/ocupado.png';
-                    }
-                    echo '<div class="col-md-2 div-container-mesa">
+                        echo '<div class="col-md-2 div-container-mesa">
                     <div class="div-mesa"><a href="?modulo=menu&idmesa='.$mesa['id'].'"><button class="btn-mesa">
                     <img src="'.$icon.'" width="150px" alt="">
                     <p class="nombre-mesa">'.$mesa['nombre'].'</p>
                     </button></a></div>
                 </div>';
+                    }
+                    if ($mesa['estado'] == 2) {
+                        $icon = '../assets/img/img-app/ocupado.png';
+                        echo '<div class="col-md-2 div-container-mesa">
+                    <div class="div-mesa"><a href="#"><button disabled class="btn-mesa">
+                    <img src="'.$icon.'" width="150px" alt="">
+                    <p class="nombre-mesa">'.$mesa['nombre'].'</p>
+                    </button></a></div>
+                </div>';
+                    }
+                    
                 }
 ?>
             </div>

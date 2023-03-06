@@ -97,7 +97,7 @@ if(strlen($id) <= 3){
         background-color: transparent;
     }
     .dropbtn{
-        height:50px;
+        height:45px;
     }
 </style>
 <nav class="navbar bg-nav-top">
