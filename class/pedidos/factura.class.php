@@ -1,5 +1,7 @@
 <?php
-class Factura{
+
+class Factura
+{
     public function traerFacturas($gbd)
     {
         $sql2 = " select * from facturas order by fecha";
@@ -31,6 +33,16 @@ class Factura{
         return $datos;
     }
 
+    public function traerPedidoFactura($gbd, $id)
+    {
+        $sql2 = " select * from detalle_pedido where factura='$id'";
+        $stmtex = $gbd->query($sql2);
+        $stmtex->execute();
+        $datos = $stmtex->fetch(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+
     // public function buscarFacturas($gbd, $search)
     // {
     //     $sql2 = " select * from facturas where UPPER(cliente) like UPPER('%$search%') or cedula like '%$search%' or UPPER(email) like UPPER('%$search%')  order by nombre";
@@ -51,10 +63,4 @@ class Factura{
 
         return $insert;
     }
-
-
-
 }
-
-
-?>
