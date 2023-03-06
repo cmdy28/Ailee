@@ -10,7 +10,7 @@
 		public $title;
 		//Lista las subpaginas
 		public $pages = array(
-			'start' => array('path' => '../subpages/resultados/index.php','title' => 'Ailee - Gestiona tu Restaurante !'),
+			'start' => array('path' => '../subpages/resultados/index.php','title' => 'Ailee - Dashboard'),
             'clientes' => array('path' => '../subpages/clientes/index.php','title' => 'Clientes'),
 			'nuevocliente' => array('path' => '../subpages/clientes/new.php','title' => 'Agregar / Editar Cliente'),
 			'menu' => array('path' => '../subpages/pedidos/index.php','title' => 'Menú POS'),

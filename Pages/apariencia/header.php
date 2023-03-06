@@ -104,7 +104,7 @@ if(strlen($id) <= 3){
     <div class="container-fluid">
         <a class="nav-link text-light" href="#">
             <img src="../assets/img/ailee-green-bg-dark-t-logo.png" alt="Logo" height="30" class="">
-            <span class="text-ailee">AILEE <sup class="sup"><?php echo $id ?></sup></span>
+            <span class="text-ailee">AILEE <sup class="sup"><?php //echo $id ?></sup></span>
         </a>
         <div>
             <a class="hora"><?php echo $title; ?></a>

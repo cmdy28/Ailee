@@ -23,7 +23,7 @@ $idpedido=$pedido['id'];
 if (isset($_REQUEST['idmesa'])) {
     $mesa=$_REQUEST['idmesa'];
 } else {
-    $mesa='';
+    $mesa=0;
 }
 
 
@@ -335,6 +335,7 @@ if (isset($_REQUEST['idmesa'])) {
     </script>
     <script>
     function guardar(opc) {
+        var mesa = <?php echo $mesa?>;
         var opc = opc;
         var idPedido = <?php echo $idpedido ?>;
         var subtotal = $("#subtotal").text();
@@ -343,7 +344,7 @@ if (isset($_REQUEST['idmesa'])) {
         var cliente = $("#cliente").val();
         console.log('CLIENTE: '+cliente);
         dataString = {
-            'mesa': <?php echo $mesa?>,
+            'mesa': mesa,
             'idPedido': idPedido,
             'subtotal': subtotal,
             'iva': iva,
@@ -358,6 +359,10 @@ if (isset($_REQUEST['idmesa'])) {
             success: function(response) { // on success..
                 if (opc == 1) {
                     console.log(response);
+                    var comprobar = response.includes("ocupado");
+                    if(comprobar == true){
+                        alert('Se creó el pedido. Pero no se pudo asignar el pedido a la mesa. La mesa  '+mesa+ ' está ocupada. \n Verifica las mesas y la comandera.')
+                    }
                     location.reload();
                 }
                 if (opc == 2) {
@@ -377,7 +382,9 @@ if (isset($_REQUEST['idmesa'])) {
         window.open('../template/print_templates/print_factura.php?pedido=<?php echo $idpedido ?>', '_blank', 'location=yes,height=670,width=720,scrollbars=yes,status=yes');
         location.reload();
     }
+
     </script>
+    
     <script>
     function cambiaCategoria(id) {
         var idCategoria = id;

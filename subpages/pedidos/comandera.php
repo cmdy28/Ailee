@@ -3,11 +3,35 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include '../class/conexion.php';
-$sql2 = " select * from mesas";
-$stmtex = $gbd->query($sql2);
-$stmtex->execute();
-$datos = $stmtex->fetchAll(PDO::FETCH_ASSOC);
-$fecha = date("d-m-Y h:i:s");
+include '../class/clientes/cliente.class.php';
+include '../class/provision/producto.class.php';
+include '../class/pedidos/pedido.class.php';
+$productos = new Producto();
+$clientes = new Cliente();
+$pedidos = new Pedido();
+
+$datos_pedidos = $pedidos->traerPedidosEstado($gbd, 6);
+
+//función calcular tiempo
+$strTimeAgo = "";
+
+function timeago($date){
+    $timestamp = strtotime($date);
+
+    $strTime = array("segundo", "minuto", "hora", "dia", "mes", "año");
+    $length = array("60","60","24","30","12","10");
+
+    $currentTime = time();
+    if ($currentTime >= $timestamp) {
+        $diff     = time()- $timestamp;
+        for ($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++) {
+            $diff = $diff / $length[$i];
+        }
+
+        $diff = round($diff);
+        return "Hace " . $diff . " " . $strTime[$i] . "(s)";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,98 +44,135 @@ $fecha = date("d-m-Y h:i:s");
 
 <body>
     <div class="container-fluid">
-    <div id="respuesta"></div>
+        <div id="respuesta"></div>
         <div class="div-new">
             <div class="row header-comandera">
-                <h5>00:00:00</h5>
-                <h5><?php echo $fecha?></h5>
+                <div id="reloj" class="reloj">
+                    00 : 00 : 00
+                </div>
             </div>
-            <hr>
             <div class="row">
-                <div class="col-md-3">
+                <?php
+                foreach ($datos_pedidos as $dp) {
+                    $idPedido = $dp['id'];
+                    $fechaPedido = $dp['fecha'];
+                    $calculo_tiempo = timeago($fechaPedido);
+
+                    $detalle_pedido = $pedidos->traerDetallePedido($gbd, $idPedido);
+                    foreach($detalle_pedido as $dp){
+                        $factura = $dp['factura'];
+                    }
+                    $mesa_pedido = $pedidos->traerMesaPedido($gbd, $idPedido);
+
+                    echo '<div class="col-md-3">
                     <div class="container-comandera-pedido">
-                    <div class="comandera-div-header">
-                        <span>Fecha y Hora de abrir el pedido</span>
-                        <br>
-                        <span><i class="fa-regular fa-clock"></i> 16 minutos</span>
-                    </div>
-                    <div class="comandera-div-content">
-                        <div class="comandera-mesa">
-                            Mesa 6 - <i class="fa-solid fa-utensils"></i>
-                        </div>
-                        <hr>
-                        <div class="comandera-products">
-                           <li>Producto1</li>
-                           <li>Producto 2</li> 
-                        </div>
-                        <hr>
+                        <div class="comandera-div-header">
+                            <span>'.$fechaPedido.'</span>
+                            <br>
+                            <span id="tiempo-pedido'.$idPedido.'"><i class="fa-regular fa-clock"></i> '.$calculo_tiempo.'</span>
+                        </div><div class="comandera-div-content">';
+
+                        if($mesa_pedido->rowCount() > 0){
+                            $mp=$mesa_pedido->fetch(PDO::FETCH_ASSOC);
+                                $idmesa=$mp['mesa'];
+                                $mesas=$pedidos->traerMesa($gbd, $idmesa);
+                                $nombreMesa=$mesas['nombre'];
+                                echo '<div class="comandera-mesa">
+                            '.$nombreMesa.'- <i class="fa-solid fa-utensils"></i>
+                        </div>';
+                            
+                         
+                        }else{
+                                echo '<div class="comandera-mesa">
+                            Factura N° 00'.$factura.' - <i class="fa-solid fa-utensils"></i>
+                        </div>';
+                        }
+                        echo '<div class="div-comandera-products">';
+                        foreach($detalle_pedido as $detalle){
+                            $id=$detalle['id'];
+                            $cant=$detalle['cant'];
+                            $idProducto = $detalle['producto'];
+                            $product = $productos->traerProducto($gbd, $idProducto);
+                            $nombre = $product['nombre'];
+                            echo '
+                            <div class="comandera-products">
+                                <strong>'.$cant.'</strong>  '.$nombre.'
+                            </div>
+                            ';
+                        }
+                        echo '</div><hr>
                         <div class="comandera-despacha">
-                            <button class="btn btn-guardar">Despachar</button>
+                            <button class="btn btn-guardar" onclick="despachar('.$idPedido.');">Despachar</button>
                         </div>
-                    </div>
                     </div>
                 </div>
-                <?php 
-                // foreach($datos as $mesa){
-                //     if($mesa['estado'] == 1){
-                //         $icon = '../assets/img/img-app/libre.png';
-                //     }
-                //     if($mesa['estado'] == 2){
-                //         $icon = '../assets/img/img-app/ocupado.png';
-                //     }
-                //     echo '<div class="col-md-2 div-container-mesa">
-                //     <div class="div-mesa"><button class="btn-mesa">
-                //     <img src="'.$icon.'" width="150px" alt="">
-                //     <p class="nombre-mesa">'.$mesa['nombre'].'</p>
-                //     </button></div>
-                // </div>';
-                // }
-                ?>
+            </div>';
+                }
+?>
             </div>
         </div>
     </div>
 
 
-    <!-- Modal Nueva mesa -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Mesa</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div>
-            <form action="../subpages/pedidos/agrega_mesa.php" method="post" id="mesaForm">
-            <div>
-                        <label for="nombre">Nombre Mesa</label>
-                        <div class="input-group flex-nowrap">
-                            <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-utensils"></i></span>
-                            <input class="form-control" placeholder="" name="nombre" id="nombre"
-                                type="text">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="cant">Capacidad</label>
-                        <div class="input-group flex-nowrap">
-                            <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-hashtag"></i></span>
-                            <input class="form-control" placeholder="" name="cant" id="cant"
-                                type="number">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-regresar" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-guardar" data-bs-dismiss="modal">Guardar</button>
-                    </div>
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
+    <script>
+    function actual() {
+        fecha = new Date(); //Actualizar fecha.
+        hora = fecha.getHours(); //hora actual
+        minuto = fecha.getMinutes(); //minuto actual
+        segundo = fecha.getSeconds(); //segundo actual
+        if (hora < 10) { //dos cifras para la hora
+            hora = "0" + hora;
+        }
+        if (minuto < 10) { //dos cifras para el minuto
+            minuto = "0" + minuto;
+        }
+        if (segundo < 10) { //dos cifras para el segundo
+            segundo = "0" + segundo;
+        }
+        //ver en el recuadro del reloj:
+        mireloj = hora + " : " + minuto + " : " + segundo;
+        return mireloj;
+    }
 
+    function actualizar() { //función del temporizador
+        mihora = actual(); //recoger hora actual
+        mireloj = document.getElementById("reloj"); //buscar elemento reloj
+        mireloj.innerHTML = mihora; //incluir hora en elemento
+    }
 
+    function actualizarCalculoTiempo(id) {
+
+        $("#tiempo-pedido" + id).load(location.href + " #tiempo-pedido" + id);
+    }
+    setInterval(actualizar, 1000); //iniciar temporizador
+    setInterval(actualizarCalculoTiempo, 1000);
+    </script>
+
+    <script>
+    function despachar(id) {
+        var idPedido = id;
+        dataString = {
+            'idPedido': idPedido
+        };
+        $.ajax({
+            url: "../subpages/pedidos/cambia_pedido.php",
+            type: "POST",
+            data: dataString,
+            success: function(response) {
+                console.log(response);
+                var comprobar = response.includes("cambio");
+                if (comprobar == true) {
+                    location.reload();
+                }
+
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>

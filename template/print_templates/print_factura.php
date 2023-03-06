@@ -88,7 +88,7 @@ $direccion=$cliente['direccion'];
                     <p><?php echo $datos_empresa;?></p>
                 </th>
                 <th width="500px" style="text-align:right;">
-                    <h4><strong>FACTURA N°: </strong><?php echo '00'.$idFactura;?> </h4>
+                    <h4><strong>FACTURA N° </strong><?php echo '00'.$idFactura;?> </h4>
                     <p><?php echo $divFactura?></p>
                 </th>
             </tr>

@@ -18,7 +18,7 @@ if (isset($_REQUEST['search'])) {
 <div class="container-fluid">
     <div class="div-new">
         <div>
-            <a href="#"><Button class="btn btn-nuevo">Importar</Button></a>
+            <!-- <a href="#"><Button class="btn btn-nuevo">Importar</Button></a> -->
             <a href="?modulo=nuevoproducto"><Button class="btn btn-nuevo">Nuevo Producto</Button></a>
             <h5>Productos</h5>
         </div>
@@ -47,8 +47,8 @@ if (isset($_REQUEST['search'])) {
                             <i class="fa-solid fa-file-excel" style="font-size:27px; color:#000"></i>
                         </button>
                     </a>
-                    <button class="btn btn-icon"><i class="fa-solid fa-file-pdf"
-                            style="font-size:27px; color:#000"></i></button>
+                    <!-- <button class="btn btn-icon"><i class="fa-solid fa-file-pdf"
+                            style="font-size:27px; color:#000"></i></button> -->
                 </div>
             </div>
         </div>
