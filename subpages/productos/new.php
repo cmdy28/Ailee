@@ -37,10 +37,10 @@ if (isset($_REQUEST['id'])) {
     $impuesto_iva = $datos['impuesto_iva'];
     $impuesto_servicio = $datos['impuesto_servicio'];
     $descripcion = $datos['descripcion'];
-    $estado = $datos['estado'];
+    $estado = $datos['estado']; //3 -> activo
     $color = $datos['color'];
     $es_materia_prima = $datos['es_materia_prima'];
-    $incluir_en_menu = $datos['incluir_en_menu'];
+    $incluir_en_menu = $datos['incluir_en_menu']; //1->true
     $categoria = $datos['categoria'];
 }
 ?>
@@ -80,6 +80,9 @@ if (isset($_REQUEST['id'])) {
                             <option value="">--Selecciona una categoria--</option>
                             <?php
                             foreach ($categorias as $cate) {
+                                if($cate['id'] == $categoria){
+                                    echo '<option value='.$cate['id'].' selected>'.$cate['nombre'].'</option>';
+                                }
                                 echo '<option value='.$cate['id'].'>'.$cate['nombre'].'</option>';
                             }
 ?>
@@ -124,16 +127,40 @@ if (isset($_REQUEST['id'])) {
                 <div class="col-md-2">
                     <label for="">Otras opciones</label>
                     <div class="input-group flex-nowrap">
-                        <input type="checkbox" name="es_materia_prima" id="es_materia_prima" class="checkbox-input">
+                        <?php
+                        if($es_materia_prima == 1){
+                            echo '<input type="checkbox" name="es_materia_prima" id="es_materia_prima" checked class="checkbox-input">';
+                        }
+                        else{
+                            echo '<input type="checkbox" name="es_materia_prima" id="es_materia_prima" class="checkbox-input">';
+                        }
+                        ?>
+                        <!-- <input type="checkbox" name="es_materia_prima" id="es_materia_prima" class="checkbox-input"> -->
                         <span class="span-checkbox"> ¿Es Materia Prima?</span>
                     </div>
                     <div class="input-group flex-nowrap">
-                        <input type="checkbox" name="en_el_menu" id="en_el_menu" class="checkbox-input"> <span
-                            class="span-checkbox"> ¿En el Menú?</span>
+                    <?php
+                        if($incluir_en_menu == 1){
+                            echo '<input type="checkbox" name="en_el_menu" id="en_el_menu" class="checkbox-input" checked> ';
+                        }
+                        else{
+                            echo '<input type="checkbox" name="en_el_menu" id="en_el_menu" class="checkbox-input"> ';
+                        }
+                        ?>
+                        <!-- <input type="checkbox" name="en_el_menu" id="en_el_menu" class="checkbox-input">  -->
+                        <span class="span-checkbox"> ¿En el Menú?</span>
                     </div>
                     <div class="input-group flex-nowrap">
-                        <input type="checkbox" name="estado" id="estado" class="checkbox-input"> <span
-                            class="span-checkbox"> Estado</span>
+                    <?php
+                        if($estado == 3){
+                            echo '<input type="checkbox" name="estado" id="estado" class="checkbox-input" checked>';
+                        }
+                        else{
+                            echo '<input type="checkbox" name="estado" id="estado" class="checkbox-input"> ';
+                        }
+                        ?>
+                        <!-- <input type="checkbox" name="estado" id="estado" class="checkbox-input">  -->
+                        <span class="span-checkbox"> Estado</span>
                     </div>
                     <!-- <div class="input-group flex-nowrap">
                             <input type="checkbox" name="" id=""> <label for=""> En el Menú</label> 
@@ -142,12 +169,28 @@ if (isset($_REQUEST['id'])) {
                 <div class="col-md-2">
                     <label for="">Impuestos</label>
                     <div class="input-group flex-nowrap">
-                        <input type="checkbox" name="impuesto_iva" id="impuesto_iva" class="checkbox-input"><span class="span-checkbox"> IVA
-                            (12%)</span>
+                    <?php
+                        if($impuesto_iva == 1){
+                            echo '<input type="checkbox" name="impuesto_iva" id="impuesto_iva" class="checkbox-input" checked>';
+                        }
+                        else{
+                            echo '<input type="checkbox" name="impuesto_iva" id="impuesto_iva" class="checkbox-input">';
+                        }
+                        ?>
+                        <!-- <input type="checkbox" name="impuesto_iva" id="impuesto_iva" class="checkbox-input"> -->
+                        <span class="span-checkbox"> IVA(12%)</span>
                     </div>
                     <div class="input-group flex-nowrap">
-                        <input type="checkbox" name="impuesto_servicio" id="impuesto_servicio" class="checkbox-input"> <span class="span-checkbox">
-                            Servicio (10%)</span>
+                    <?php
+                        if($impuesto_servicio == 1){
+                            echo '<input type="checkbox" name="impuesto_servicio" id="impuesto_servicio" class="checkbox-input" checked>';
+                        }
+                        else{
+                            echo '<input type="checkbox" name="impuesto_servicio" id="impuesto_servicio" class="checkbox-input">';
+                        }
+                        ?>
+                        <!-- <input type="checkbox" name="impuesto_servicio" id="impuesto_servicio" class="checkbox-input">  -->
+                        <span class="span-checkbox">Servicio (10%)</span>
                     </div>
                 </div>
                 <div class="col-md-2">

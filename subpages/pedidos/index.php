@@ -379,7 +379,7 @@ if (isset($_REQUEST['idmesa'])) {
     }
 
     function imprimeFactura(){
-        window.open('../template/print_templates/print_factura.php?pedido=<?php echo $idpedido ?>', '_blank', 'location=yes,height=670,width=720,scrollbars=yes,status=yes');
+        window.open('../template/print_templates/print_factura.php?pedido=<?php echo $idpedido ?>', '_blank', 'location=yes,height=700,width=1200,scrollbars=yes,status=yes');
         location.reload();
     }
 
